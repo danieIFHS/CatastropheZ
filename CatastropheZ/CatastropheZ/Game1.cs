@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-// test est este test
+
 namespace CatastropheZ
 {
     /// <summary>
