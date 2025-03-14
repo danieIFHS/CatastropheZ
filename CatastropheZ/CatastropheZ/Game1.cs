@@ -19,9 +19,17 @@ namespace CatastropheZ
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        List<Player> players;
+        Texture2D PLACEHOLDER;
+
+        Level PLACEHOLDER_LEVEL;
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
             Content.RootDirectory = "Content";
         }
 
@@ -34,6 +42,9 @@ namespace CatastropheZ
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            players = new List<Player>();
+
+            PLACEHOLDER_LEVEL = new Level("TestLevel");
 
             base.Initialize();
         }
@@ -48,6 +59,21 @@ namespace CatastropheZ
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            PLACEHOLDER = this.Content.Load<Texture2D>("images");
+
+            int plrCount = 1;
+            for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
+            {
+                GamePadState state = GamePad.GetState(i);
+                if (state.IsConnected)
+                {
+                    Player e = new Player(i, new Rectangle(50, 50, 50, 50), PLACEHOLDER);
+                    players.Add(e);
+                    plrCount++;
+                }
+            }
+
+
         }
 
         /// <summary>
@@ -71,6 +97,10 @@ namespace CatastropheZ
                 this.Exit();
 
             // TODO: Add your update logic here
+            for (int i = 0; i < players.Count; i++)
+            {
+                players[i].Update();
+            }
 
             base.Update(gameTime);
         }
@@ -84,6 +114,12 @@ namespace CatastropheZ
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            for (int i = 0; i < players.Count; i++)
+            {
+                players[i].Draw(spriteBatch);
+            }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
