@@ -43,6 +43,7 @@ namespace CatastropheZ
                             xCount++;
                         }
                         yCount++;
+                        xCount = 0;
                     }
                 }
             }
