@@ -12,10 +12,21 @@ using System.IO;
 
 namespace CatastropheZ
 {
-    class Tile
+    public class Tile
     {
-        public string CollisonType;
+        public int CollisonType; // 0 is passable, 1 is impassable
         public Texture2D Texture;
         public Rectangle Rect;
+        public Color color;
+
+        public Tile()
+        {
+            Random random = new Random(Guid.NewGuid().GetHashCode());
+            color = new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
+        }
+        public void Draw()
+        {
+            Globals.Batch.Draw(Texture, Rect, color);
+        }
     }
 }

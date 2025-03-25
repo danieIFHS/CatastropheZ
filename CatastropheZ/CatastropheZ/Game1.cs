@@ -20,10 +20,6 @@ namespace CatastropheZ
         SpriteBatch spriteBatch;
 
         List<Player> players;
-        Texture2D PLACEHOLDER;
-
-        Level PLACEHOLDER_LEVEL;
-        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -42,9 +38,12 @@ namespace CatastropheZ
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            players = new List<Player>();
 
-            PLACEHOLDER_LEVEL = new Level("TestLevel");
+            Globals.Textures = new Dictionary<string, Texture2D>();
+            Globals.Batch = spriteBatch;
+            Globals.InGame = true;
+
+            players = new List<Player>();
 
             base.Initialize();
         }
@@ -59,7 +58,8 @@ namespace CatastropheZ
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            PLACEHOLDER = this.Content.Load<Texture2D>("images");
+            Globals.Textures["Placeholder"] = this.Content.Load<Texture2D>("images");
+            Globals.ActiveLevel = new Level("TestLevel");
 
             int plrCount = 1;
             for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
@@ -67,7 +67,7 @@ namespace CatastropheZ
                 GamePadState state = GamePad.GetState(i);
                 if (state.IsConnected)
                 {
-                    Player e = new Player(i, new Rectangle(50, 50, 50, 50), PLACEHOLDER);
+                    Player e = new Player(i, new Rectangle(50, 50, 30, 30), Globals.Textures["Placeholder"]);
                     players.Add(e);
                     plrCount++;
                 }
@@ -99,9 +99,12 @@ namespace CatastropheZ
                 this.Exit();
 
             // TODO: Add your update logic here
-            for (int i = 0; i < players.Count; i++)
+            if (Globals.InGame)
             {
-                players[i].Update();
+                for (int i = 0; i < players.Count; i++)
+                {
+                    players[i].Update();
+                }
             }
 
             base.Update(gameTime);
@@ -117,10 +120,21 @@ namespace CatastropheZ
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+            Globals.Batch = spriteBatch;
+
+            for (int i = 0; i < Globals.ActiveLevel.TileData.GetLength(0); i++)
+            {
+                for (int j = 0; j < Globals.ActiveLevel.TileData.GetLength(1); j++)
+                {
+                    Globals.ActiveLevel.TileData[i, j].Draw();
+                }
+            }
+
             for (int i = 0; i < players.Count; i++)
             {
-                players[i].Draw(spriteBatch);
+                players[i].Draw();
             }
+
             spriteBatch.End();
 
             base.Draw(gameTime);

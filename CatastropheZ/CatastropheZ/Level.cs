@@ -12,15 +12,15 @@ using System.IO;
 
 namespace CatastropheZ
 {
-    class Level
+    public class Level
     {
-        private Tile[,] TileData;
+        public Tile[,] TileData;
         public string LevelName;
 
         public Level(string levelname)
         {
             LevelName = levelname;
-            TileData = new Tile[100,50];
+            TileData = new Tile[83,96];
             Read();
         }
 
@@ -39,6 +39,7 @@ namespace CatastropheZ
                         foreach (char c in Line)
                         {
                             Tile e = new Tile();
+                            HandleTile(e, c, xCount, yCount);
                             TileData[xCount, yCount] = e;
                             xCount++;
                         }
@@ -51,6 +52,18 @@ namespace CatastropheZ
             {
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);
+            }
+        }
+
+        private void HandleTile(Tile _tile, Char _char, int _x, int _y)
+        {
+            switch (_char)
+            {
+                case '.':
+                    _tile.CollisonType = 1;
+                    _tile.Texture = Globals.Textures["Placeholder"]; //1600 total width
+                    _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
+                    break;
             }
         }
     }

@@ -41,9 +41,9 @@ namespace CatastropheZ
 
         }
 
-        public void Draw(SpriteBatch batch)
+        public void Draw()
         {
-            batch.Draw(Texture, Rect, new Rectangle(0, 0, Texture.Width, Texture.Height), Color.White, Degrees, new Vector2(Texture.Width / 2, Texture.Height / 2), SpriteEffects.None, 1);
+            Globals.Batch.Draw(Texture, Rect, new Rectangle(0, 0, Texture.Width, Texture.Height), Color.White, Degrees, new Vector2(Texture.Width / 2, Texture.Height / 2), SpriteEffects.None, 1);
         }
     }
 }
