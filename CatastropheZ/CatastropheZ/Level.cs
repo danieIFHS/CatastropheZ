@@ -61,7 +61,7 @@ namespace CatastropheZ
             {
                 case '.':
                     _tile.CollisonType = 1;
-                    _tile.Texture = Globals.Textures["Placeholder"]; //1600 total width
+                    _tile.Texture = Globals.Textures["Placeholder"]; 
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
                     break;
             }
