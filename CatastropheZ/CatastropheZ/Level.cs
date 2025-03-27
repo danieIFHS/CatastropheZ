@@ -59,10 +59,16 @@ namespace CatastropheZ
         {
             switch (_char)
             {
-                case '.':
+                case '.': // Blank tile (testing)
                     _tile.CollisonType = 1;
                     _tile.Texture = Globals.Textures["Placeholder"]; 
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
+                    break;
+                case 'W': // Wall
+                    _tile.CollisonType = 0;
+                    _tile.Texture = Globals.Textures["Placeholder"];
+                    _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
+                    _tile.color = Color.Black;
                     break;
             }
         }

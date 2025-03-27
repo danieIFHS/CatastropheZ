@@ -67,7 +67,7 @@ namespace CatastropheZ
                 GamePadState state = GamePad.GetState(i);
                 if (state.IsConnected)
                 {
-                    Player e = new Player(i, new Rectangle(50, 50, 30, 30), Globals.Textures["Placeholder"]);
+                    Player e = new Player(i, new Rectangle(30, 30, 30, 30), Globals.Textures["Placeholder"]);
                     players.Add(e);
                     plrCount++;
                 }
