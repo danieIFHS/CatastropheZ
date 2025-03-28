@@ -20,7 +20,7 @@ namespace CatastropheZ
         public Level(string levelname)
         {
             LevelName = levelname;
-            TileData = new Tile[83,96];
+            TileData = new Tile[83,54];
             Read();
         }
 
