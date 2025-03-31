@@ -42,6 +42,7 @@ namespace CatastropheZ
             Globals.Textures = new Dictionary<string, Texture2D>();
             Globals.Batch = spriteBatch;
             Globals.InGame = true;
+            Globals.Projectiles = new List<Projectile>();
 
             players = new List<Player>();
 
@@ -101,9 +102,13 @@ namespace CatastropheZ
             // TODO: Add your update logic here
             if (Globals.InGame)
             {
-                for (int i = 0; i < players.Count; i++)
+                foreach (Player player in players)
                 {
-                    players[i].Update();
+                    player.Update();
+                }
+                foreach (Projectile proj in Globals.Projectiles)
+                {
+                    proj.Update();
                 }
             }
 
@@ -133,6 +138,11 @@ namespace CatastropheZ
             for (int i = 0; i < players.Count; i++)
             {
                 players[i].Draw();
+            }
+
+            foreach (Projectile proj in Globals.Projectiles)
+            {
+                proj.Draw();
             }
 
             spriteBatch.End();

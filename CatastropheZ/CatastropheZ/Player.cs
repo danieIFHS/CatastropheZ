@@ -11,16 +11,18 @@ using System.Linq;
 
 namespace CatastropheZ
 {
-    class Player
+    public class Player
     {
         public PlayerIndex Index;
         public GamePadState padState;
         public Rectangle Rect;
         public Texture2D Texture;
 
-        private float Degrees;
-        private Vector2 position; 
-        private const float Speed = 3f; 
+        public float Degrees;
+        public Vector2 position;
+        public const float Speed = 3f;
+
+        public Weapon activeWeapon;
 
         public Player(PlayerIndex plrindex, Rectangle rect, Texture2D texture)
         {
@@ -28,6 +30,9 @@ namespace CatastropheZ
             Rect = rect;
             Texture = texture;
             position = new Vector2(rect.X, rect.Y);
+
+            activeWeapon = new Weapon(this, Globals.Textures["Placeholder"], "Gun");
+            
         }
 
         public void Update()
@@ -46,6 +51,20 @@ namespace CatastropheZ
             Rect.Y = (int)Math.Round(position.Y);
 
             CollisionManager();
+
+            activeWeapon.rect = new Rectangle(Rect.X, Rect.Y, 10, 30);
+            if (padState.Triggers.Right > 0)
+            {
+                switch (activeWeapon.Type)
+                {
+                    case "Gun":
+                        activeWeapon.Fire();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         public void CollisionManager()
@@ -106,6 +125,19 @@ namespace CatastropheZ
                 new Vector2(Texture.Width / 2, Texture.Height / 2),
                 SpriteEffects.None,
                 1);
+
+            if (activeWeapon != null)
+            {
+                Globals.Batch.Draw(
+                    activeWeapon.texture,
+                    activeWeapon.rect,
+                    new Rectangle(0, 0, activeWeapon.texture.Width, activeWeapon.texture.Height),
+                    Color.Red,
+                    Degrees,
+                    new Vector2(activeWeapon.texture.Width / 2, activeWeapon.texture.Height / 2),
+                    SpriteEffects.None,
+                    1);
+            }
         }
     }
 }

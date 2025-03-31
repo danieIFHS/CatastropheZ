@@ -9,14 +9,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace CatastropheZ
 {
-    public class Globals
+    public static class Gun
     {
-        public static Dictionary<string, Texture2D> Textures;
-        public static SpriteBatch Batch;
-        public static Level ActiveLevel;
-        public static bool InGame;
-        public static List<Projectile> Projectiles;
+        public static void Fire(this Weapon weapon)
+        {
+            if (weapon.Equipped == true)
+            {
+                Projectile e = new Projectile(Globals.Textures["Placeholder"], weapon.rect, weapon.attatchedPlayer.Degrees);
+                Globals.Projectiles.Add(e);
+            }
+        }
     }
 }
