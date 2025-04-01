@@ -43,6 +43,7 @@ namespace CatastropheZ
             Globals.Batch = spriteBatch;
             Globals.InGame = true;
             Globals.Projectiles = new List<Projectile>();
+            Globals.gameTime = null;
 
             players = new List<Player>();
 
@@ -100,6 +101,8 @@ namespace CatastropheZ
                 this.Exit();
 
             // TODO: Add your update logic here
+            Globals.gameTime = gameTime;
+
             if (Globals.InGame)
             {
                 foreach (Player player in players)

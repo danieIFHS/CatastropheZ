@@ -18,7 +18,12 @@ namespace CatastropheZ
         {
             if (weapon.Equipped == true)
             {
-                Projectile e = new Projectile(Globals.Textures["Placeholder"], weapon.rect, weapon.attatchedPlayer.Degrees);
+                Vector2 tipOffset = new Vector2(20, 0);
+                Vector2 rotatedTipOffset = Vector2.Transform(tipOffset, Matrix.CreateRotationZ(weapon.attatchedPlayer.Degrees));
+                Vector2 gunTipPosition = weapon.attatchedPlayer.position + rotatedTipOffset;
+                Projectile e = new Projectile(Globals.Textures["Placeholder"],new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10), 
+                    weapon.attatchedPlayer.Degrees - MathHelper.PiOver2 
+);
                 Globals.Projectiles.Add(e);
             }
         }

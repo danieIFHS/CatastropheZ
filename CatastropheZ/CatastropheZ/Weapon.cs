@@ -18,6 +18,8 @@ namespace CatastropheZ
         public bool Equipped;
         public string Type;
         public Rectangle rect;
+        public int lastUsed;
+        public int cooldown;
 
         public Weapon(Player _player, Texture2D _texture, string _Type)
         {

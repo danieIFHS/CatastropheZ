@@ -32,6 +32,8 @@ namespace CatastropheZ
             position = new Vector2(rect.X, rect.Y);
 
             activeWeapon = new Weapon(this, Globals.Textures["Placeholder"], "Gun");
+            activeWeapon.cooldown = 110;
+            activeWeapon.lastUsed = -5000;
             
         }
 
@@ -52,17 +54,22 @@ namespace CatastropheZ
 
             CollisionManager();
 
-            activeWeapon.rect = new Rectangle(Rect.X, Rect.Y, 10, 30);
+            activeWeapon.rect = new Rectangle(Rect.X, Rect.Y, 10, 50);
             if (padState.Triggers.Right > 0)
             {
-                switch (activeWeapon.Type)
+                Console.WriteLine(Globals.gameTime.TotalGameTime.TotalMilliseconds);
+                if (Globals.gameTime.TotalGameTime.TotalMilliseconds - activeWeapon.lastUsed > activeWeapon.cooldown)
                 {
-                    case "Gun":
-                        activeWeapon.Fire();
-                        break;
+                    activeWeapon.lastUsed = (int)Globals.gameTime.TotalGameTime.TotalMilliseconds;
+                    switch (activeWeapon.Type)
+                    {
+                        case "Gun":
+                            activeWeapon.Fire();
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -115,7 +122,9 @@ namespace CatastropheZ
         }
 
         public void Draw()
-        { 
+        {
+            Vector2 playerCenter = new Vector2(Rect.X + Rect.Width / 2, Rect.Y + Rect.Height / 2);
+
             Globals.Batch.Draw(
                 Texture,
                 Rect,
@@ -126,18 +135,16 @@ namespace CatastropheZ
                 SpriteEffects.None,
                 1);
 
-            if (activeWeapon != null)
-            {
-                Globals.Batch.Draw(
-                    activeWeapon.texture,
-                    activeWeapon.rect,
-                    new Rectangle(0, 0, activeWeapon.texture.Width, activeWeapon.texture.Height),
-                    Color.Red,
-                    Degrees,
-                    new Vector2(activeWeapon.texture.Width / 2, activeWeapon.texture.Height / 2),
-                    SpriteEffects.None,
-                    1);
-            }
+            Globals.Batch.Draw(
+                activeWeapon.texture,
+                activeWeapon.rect,
+                new Rectangle(0, 0, activeWeapon.texture.Width, activeWeapon.texture.Height),
+                Color.Red,
+                Degrees,
+                new Vector2(-350, activeWeapon.texture.Height / 2),
+                SpriteEffects.None,
+                1);
+
         }
     }
 }

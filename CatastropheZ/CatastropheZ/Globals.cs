@@ -18,5 +18,6 @@ namespace CatastropheZ
         public static Level ActiveLevel;
         public static bool InGame;
         public static List<Projectile> Projectiles;
+        public static GameTime gameTime;
     }
 }

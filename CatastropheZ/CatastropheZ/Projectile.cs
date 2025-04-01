@@ -24,12 +24,9 @@ namespace CatastropheZ
             text = _text;
             rect = _rect;
             degrees = _degrees;
-            velocity = new Vector2((float)Math.Cos(degrees) * 15f, (float)Math.Sin(degrees) * 15f);
-            //velocity.Normalize();
-
+            float veloAngle = degrees;
+            velocity = new Vector2((float)Math.Cos(veloAngle) * 30f, (float)Math.Sin(veloAngle) * 30f);
             position = new Vector2(rect.X, rect.Y);
-
-            Console.WriteLine($"Degrees: {_degrees}, Velocity: {velocity}");
         }
 
         public void Update()
