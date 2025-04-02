@@ -32,7 +32,7 @@ namespace CatastropheZ
             position = new Vector2(rect.X, rect.Y);
 
             activeWeapon = new Weapon(this, Globals.Textures["Placeholder"], "Gun");
-            activeWeapon.cooldown = 110;
+            activeWeapon.cooldown = 0;
             activeWeapon.lastUsed = -5000;
             
         }
@@ -57,7 +57,6 @@ namespace CatastropheZ
             activeWeapon.rect = new Rectangle(Rect.X, Rect.Y, 10, 50);
             if (padState.Triggers.Right > 0)
             {
-                Console.WriteLine(Globals.gameTime.TotalGameTime.TotalMilliseconds);
                 if (Globals.gameTime.TotalGameTime.TotalMilliseconds - activeWeapon.lastUsed > activeWeapon.cooldown)
                 {
                     activeWeapon.lastUsed = (int)Globals.gameTime.TotalGameTime.TotalMilliseconds;

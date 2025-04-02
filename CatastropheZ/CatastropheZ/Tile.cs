@@ -18,15 +18,17 @@ namespace CatastropheZ
         public Texture2D Texture;
         public Rectangle Rect;
         public Color color;
+        public float transparency;
 
         public Tile()
         {
             Random random = new Random(Guid.NewGuid().GetHashCode());
             color = new Color(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255));
+            transparency = 1f;
         }
         public void Draw()
         {
-            Globals.Batch.Draw(Texture, Rect, color);
+            Globals.Batch.Draw(Texture, Rect, color * transparency);
         }
     }
 }

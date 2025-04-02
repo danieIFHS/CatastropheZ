@@ -138,9 +138,22 @@ namespace CatastropheZ
                 }
             }
 
+            for (int i = 0; i < Globals.ActiveLevel.PathfindingData.GetLength(0); i++)
+            {
+                for (int j = 0; j < Globals.ActiveLevel.PathfindingData.GetLength(1); j++)
+                {
+                    Globals.ActiveLevel.PathfindingData[i, j].Draw();
+                }
+            }
+
             for (int i = 0; i < players.Count; i++)
             {
                 players[i].Draw();
+            }
+
+            foreach (Zombie zombie in Globals.ActiveLevel.Zombies)
+            {
+                zombie.Draw();
             }
 
             foreach (Projectile proj in Globals.Projectiles)
