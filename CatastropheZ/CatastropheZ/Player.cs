@@ -32,7 +32,7 @@ namespace CatastropheZ
             position = new Vector2(rect.X, rect.Y);
 
             activeWeapon = new Weapon(this, Globals.Textures["Placeholder"], "Gun");
-            activeWeapon.cooldown = 0;
+            activeWeapon.cooldown = 110;
             activeWeapon.lastUsed = -5000;
             
         }
@@ -86,7 +86,7 @@ namespace CatastropheZ
                 for (int x = leftTile; x <= rightTile; x++)
                 {
                     Tile toCheck = Globals.ActiveLevel.TileData[x, y];
-                    if (toCheck.CollisonType != 1)
+                    if (toCheck.CollisionType != 1)
                     {
                         Rectangle tileBounds = toCheck.Rect;
                         Vector2 depth = bounds.GetIntersectionDepth(tileBounds);

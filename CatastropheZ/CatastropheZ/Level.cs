@@ -25,7 +25,6 @@ namespace CatastropheZ
             TileData = new Tile[84,54];
             PathfindingData = new Tile[42, 27];
             Zombies = new List<Zombie>();
-            Zombies.Add(new Zombie());
             Read();
         }
 
@@ -67,15 +66,21 @@ namespace CatastropheZ
             switch (_char)
             {
                 case '.': // Blank tile (testing)
-                    _tile.CollisonType = 1;
+                    _tile.CollisionType = 1;
                     _tile.Texture = Globals.Textures["Placeholder"]; 
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
                     break;
                 case 'W': // Wall
-                    _tile.CollisonType = 0;
+                    _tile.CollisionType = 0;
                     _tile.Texture = Globals.Textures["Placeholder"];
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
                     _tile.color = Color.Black;
+                    break;
+                case 'C': // Cure
+                    _tile.CollisionType = 2;
+                    _tile.Texture = Globals.Textures["Placeholder"];
+                    _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
+                    _tile.color = Color.White;
                     break;
             }
         }
@@ -88,11 +93,11 @@ namespace CatastropheZ
                 {
                     if (i % 2 == 0 && v % 2 == 0)
                     {
-                        Console.WriteLine(i + " | " + v);
                         Tile e = new Tile();
                         e.transparency = 0.8f;
                         e.Rect = new Rectangle(i * 20, v * 20, 40, 40);
                         e.Texture = Globals.Textures["Placeholder"];
+                        e.CollisionType = 1;
                         PathfindingData[(i / 2), (v / 2)] = e;
                     }
                 }
@@ -107,10 +112,16 @@ namespace CatastropheZ
                     Tile entry3 = TileData[i * 2, v * 2 + 1];
                     Tile entry4 = TileData[i * 2 + 1, v * 2 + 1];
 
-                    if (entry1.CollisonType == 0 || entry2.CollisonType == 0 || entry3.CollisonType == 0 || entry4.CollisonType == 0)
+                    if (entry1.CollisionType == 0 || entry2.CollisionType == 0 || entry3.CollisionType == 0 || entry4.CollisionType == 0)
                     {
-                        Console.WriteLine("hi");
                         PathfindingData[i, v].color = Color.Black;
+                        PathfindingData[i, v].CollisionType = 0;
+                    }
+                    if (entry1.CollisionType == 2 || entry2.CollisionType == 2 || entry3.CollisionType == 2 || entry4.CollisionType == 2)
+                    {
+                        PathfindingData[i, v].color = Color.White;
+                        PathfindingData[i, v].CollisionType = 2;
+                        Console.WriteLine("Found Cure");
                     }
                 }
             }

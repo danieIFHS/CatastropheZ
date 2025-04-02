@@ -62,6 +62,7 @@ namespace CatastropheZ
             // TODO: use this.Content to load your game content here
             Globals.Textures["Placeholder"] = this.Content.Load<Texture2D>("images");
             Globals.ActiveLevel = new Level("TestLevel");
+            Globals.ActiveLevel.Zombies.Add(new Zombie());
 
             int plrCount = 1;
             for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
@@ -112,6 +113,10 @@ namespace CatastropheZ
                 foreach (Projectile proj in Globals.Projectiles)
                 {
                     proj.Update();
+                }
+                foreach(Zombie zombie in Globals.ActiveLevel.Zombies)
+                {
+                    zombie.Update();
                 }
             }
 

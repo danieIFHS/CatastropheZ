@@ -14,7 +14,7 @@ namespace CatastropheZ
 {
     public class Tile
     {
-        public int CollisonType; // 0 is passable, 1 is impassable
+        public int CollisionType; // 0 is passable, 1 is impassable
         public Texture2D Texture;
         public Rectangle Rect;
         public Color color;
