@@ -27,7 +27,7 @@ namespace CatastropheZ
         public Zombie()
         {
             Random random = new Random(Guid.NewGuid().GetHashCode());
-            rect = new Rectangle(15, random.Next(10, 980), 25, 25);
+            rect = new Rectangle(20, random.Next(10, 980), 25, 25);
             text = Globals.Textures["Placeholder"];
             position = new Vector2(rect.X, rect.Y);
 
@@ -177,7 +177,7 @@ namespace CatastropheZ
 
             //position.X = MathHelper.Clamp(position.X, 12, (84 * 20) - rect.Width / 2);
             //position.Y = MathHelper.Clamp(position.Y, 12, (54 * 20) - rect.Height / 2);
-
+            // when spawning on the upper half, the pathfinding decides to go offmap for some reason, which gets it stuck with the clamp function (fix later please)
             rect.X = (int)Math.Round(position.X);
             rect.Y = (int)Math.Round(position.Y);
         }
