@@ -19,5 +19,7 @@ namespace CatastropheZ
         public static bool InGame;
         public static List<Projectile> Projectiles;
         public static GameTime gameTime;
+        public static List<Player> Players;
+        public static SpriteFont Font;
     }
 }

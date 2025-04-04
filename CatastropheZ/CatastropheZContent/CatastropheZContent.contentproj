@@ -37,6 +37,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="Font.spritefont">
+      <Name>Font</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="Levels\TestLevel.txt">
       <Name>TestLevel</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

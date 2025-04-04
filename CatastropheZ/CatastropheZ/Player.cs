@@ -22,6 +22,8 @@ namespace CatastropheZ
         public Vector2 position;
         public const float Speed = 3f;
 
+        public float Health = 100;
+
         public Weapon activeWeapon;
 
         public Player(PlayerIndex plrindex, Rectangle rect, Texture2D texture)
@@ -77,7 +79,7 @@ namespace CatastropheZ
         {
             Rectangle bounds = new Rectangle(Rect.X - 15, Rect.Y - 15, Rect.Width, Rect.Height);
             int leftTile = Math.Max((int)Math.Floor(bounds.Left / 20f), 0);
-            int rightTile = Math.Min((int)Math.Ceiling(bounds.Right / 20f) - 1, 82);
+            int rightTile = Math.Min((int)Math.Ceiling(bounds.Right / 20f) - 1, 83);
             int topTile = Math.Max((int)Math.Floor(bounds.Top / 20f), 0);
             int bottomTile = Math.Min((int)Math.Ceiling(bounds.Bottom / 20f) - 1, 53);
 
@@ -86,7 +88,7 @@ namespace CatastropheZ
                 for (int x = leftTile; x <= rightTile; x++)
                 {
                     Tile toCheck = Globals.ActiveLevel.TileData[x, y];
-                    if (toCheck.CollisionType != 1)
+                    if (toCheck.CollisionType == 0)
                     {
                         Rectangle tileBounds = toCheck.Rect;
                         Vector2 depth = bounds.GetIntersectionDepth(tileBounds);
@@ -120,7 +122,7 @@ namespace CatastropheZ
             Rect.Y = (int)Math.Round(position.Y);
         }
 
-        public void Draw()
+        public void Draw(int position)
         {
             Vector2 playerCenter = new Vector2(Rect.X + Rect.Width / 2, Rect.Y + Rect.Height / 2);
 
@@ -144,6 +146,8 @@ namespace CatastropheZ
                 SpriteEffects.None,
                 1);
 
+            //1680
+            Globals.Batch.DrawString(Globals.Font, Health.ToString(), new Vector2(1680, 600 + (position * 100)), Color.White);
         }
     }
 }

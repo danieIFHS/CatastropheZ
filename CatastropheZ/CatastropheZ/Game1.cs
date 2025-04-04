@@ -19,7 +19,8 @@ namespace CatastropheZ
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        List<Player> players;
+        int Timer;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -44,8 +45,7 @@ namespace CatastropheZ
             Globals.InGame = true;
             Globals.Projectiles = new List<Projectile>();
             Globals.gameTime = null;
-
-            players = new List<Player>();
+            Globals.Players = new List<Player>();
 
             base.Initialize();
         }
@@ -62,7 +62,11 @@ namespace CatastropheZ
             // TODO: use this.Content to load your game content here
             Globals.Textures["Placeholder"] = this.Content.Load<Texture2D>("images");
             Globals.ActiveLevel = new Level("TestLevel");
-            Globals.ActiveLevel.Zombies.Add(new Zombie());
+            Globals.Font = this.Content.Load<SpriteFont>("Font");
+            for (int i = 0; i < 30; i++)
+            {
+                Globals.ActiveLevel.Zombies.Add(new Zombie());
+            }
 
             int plrCount = 1;
             for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
@@ -71,7 +75,7 @@ namespace CatastropheZ
                 if (state.IsConnected)
                 {
                     Player e = new Player(i, new Rectangle(30, 30, 30, 30), Globals.Textures["Placeholder"]);
-                    players.Add(e);
+                    Globals.Players.Add(e);
                     plrCount++;
                 }
             }
@@ -106,13 +110,14 @@ namespace CatastropheZ
 
             if (Globals.InGame)
             {
-                foreach (Player player in players)
+                foreach (Player player in Globals.Players)
                 {
                     player.Update();
                 }
-                foreach (Projectile proj in Globals.Projectiles)
+                foreach (Projectile proj in Globals.Projectiles.ToList<Projectile>())
                 {
                     proj.Update();
+
                 }
                 foreach(Zombie zombie in Globals.ActiveLevel.Zombies)
                 {
@@ -120,6 +125,12 @@ namespace CatastropheZ
                 }
             }
 
+            if (Timer % 60 == 1)
+            {
+                Globals.ActiveLevel.Zombies.Add(new Zombie());
+            }
+
+            Timer++;
             base.Update(gameTime);
         }
 
@@ -143,17 +154,17 @@ namespace CatastropheZ
                 }
             }
 
-            for (int i = 0; i < Globals.ActiveLevel.PathfindingData.GetLength(0); i++)
-            {
-                for (int j = 0; j < Globals.ActiveLevel.PathfindingData.GetLength(1); j++)
-                {
-                    Globals.ActiveLevel.PathfindingData[i, j].Draw();
-                }
-            }
+            //for (int i = 0; i < Globals.ActiveLevel.PathfindingData.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < Globals.ActiveLevel.PathfindingData.GetLength(1); j++)
+            //    {
+            //        Globals.ActiveLevel.PathfindingData[i, j].Draw();
+            //    }
+            //}
 
-            for (int i = 0; i < players.Count; i++)
+            for (int i = 0; i < Globals.Players.Count; i++)
             {
-                players[i].Draw();
+                Globals.Players[i].Draw(i);
             }
 
             foreach (Zombie zombie in Globals.ActiveLevel.Zombies)
@@ -161,7 +172,7 @@ namespace CatastropheZ
                 zombie.Draw();
             }
 
-            foreach (Projectile proj in Globals.Projectiles)
+            foreach (Projectile proj in Globals.Projectiles.ToList<Projectile>())
             {
                 proj.Draw();
             }

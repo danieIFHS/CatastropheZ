@@ -19,6 +19,7 @@ namespace CatastropheZ
         Vector2 velocity;
         Vector2 position;
 
+
         public Projectile(Texture2D _text, Rectangle _rect, float _degrees)
         {
             text = _text;
@@ -37,6 +38,41 @@ namespace CatastropheZ
 
             rect.X = (int)Math.Round(position.X);
             rect.Y = (int)Math.Round(position.Y);
+
+            for (int i = 0; i < Globals.ActiveLevel.Zombies.Count; i++)
+            {
+                if (rect.Intersects(Globals.ActiveLevel.Zombies[i].rect))
+                {
+                    Globals.ActiveLevel.Zombies.RemoveAt(i);
+                    
+                    for (int v = 0; v < Globals.Projectiles.Count; v++)
+                    {
+                        if (Globals.Projectiles[v].rect == rect)
+                        {
+                            Globals.Projectiles.RemoveAt(v);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < Globals.ActiveLevel.TileData.GetLength(0); i++)
+            {
+                for (int j = 0; j < Globals.ActiveLevel.TileData.GetLength(1); j++)
+                {
+                    if (rect.Intersects(Globals.ActiveLevel.TileData[i, j].Rect) && Globals.ActiveLevel.TileData[i, j].CollisionType == 0)
+                    {
+                        for (int v = 0; v < Globals.Projectiles.Count; v++)
+                        {
+                            if (Globals.Projectiles[v].rect == rect)
+                            {
+                                Globals.Projectiles.RemoveAt(v);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public void Draw()
@@ -50,7 +86,7 @@ namespace CatastropheZ
                 new Vector2(text.Width / 2, text.Height / 2),
                 SpriteEffects.None,
                 1
-                );
+            );
         }
     }
 }
