@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace CatastropheZ
 {
@@ -61,11 +62,18 @@ namespace CatastropheZ
 
             // TODO: use this.Content to load your game content here
             Globals.Textures["Placeholder"] = this.Content.Load<Texture2D>("images");
-            Globals.ActiveLevel = new Level("TestLevel");
             Globals.Font = this.Content.Load<SpriteFont>("Font");
-            for (int i = 0; i < 30; i++)
+
+            string[] files = Directory.GetFiles("Content\\Sprites\\Tiles");
+            for (int i = 0; i < files.Count(); i++)
             {
-                Globals.ActiveLevel.Zombies.Add(new Zombie());
+                string sub = files[i].Substring(8, files[i].Length - 12);
+                Globals.Textures[sub.Substring(14)] = this.Content.Load<Texture2D>(sub);
+            }
+
+            foreach (KeyValuePair<string, Texture2D> entry in Globals.Textures)
+            {
+                Console.WriteLine(entry.Key);
             }
 
             int plrCount = 1;
@@ -80,7 +88,12 @@ namespace CatastropheZ
                 }
             }
 
+            Globals.ActiveLevel = new Level("TestLevel");
 
+            for (int i = 0; i < 30; i++)
+            {
+                Globals.ActiveLevel.Zombies.Add(new Zombie());
+            } // THIS IS FOR TESTS ^^^^
         }
 
         /// <summary>

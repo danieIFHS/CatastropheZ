@@ -67,8 +67,9 @@ namespace CatastropheZ
             {
                 case '.': // Blank tile (testing)
                     _tile.CollisionType = 1;
-                    _tile.Texture = Globals.Textures["Placeholder"]; 
+                    _tile.Texture = Globals.Textures["Grass"]; 
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
+                    _tile.color = Color.DarkGray;
                     break;
                 case 'W': // Wall
                     _tile.CollisionType = 0;

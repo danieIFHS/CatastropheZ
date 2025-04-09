@@ -175,8 +175,8 @@ namespace CatastropheZ
                 }
             }
 
-            //position.X = MathHelper.Clamp(position.X, 12, (84 * 20) - rect.Width / 2);
-            //position.Y = MathHelper.Clamp(position.Y, 12, (54 * 20) - rect.Height / 2);
+            position.X = MathHelper.Clamp(position.X, 0, (84 * 20) - rect.Width);
+            position.Y = MathHelper.Clamp(position.Y, 0, (54 * 20) - rect.Height);
             // when spawning on the upper half, the pathfinding decides to go offmap for some reason, which gets it stuck with the clamp function (fix later please)
             rect.X = (int)Math.Round(position.X);
             rect.Y = (int)Math.Round(position.Y);
@@ -188,7 +188,7 @@ namespace CatastropheZ
                 text,
                 new Rectangle(rect.X + 12, rect.Y + 12, rect.Width, rect.Height),
                 new Rectangle(0, 0, text.Width, text.Height),
-                Color.DarkGreen,
+                Color.Yellow,
                 rotation,
                 new Vector2(text.Width / 2, text.Height / 2),
                 SpriteEffects.None,
