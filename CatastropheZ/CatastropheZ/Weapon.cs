@@ -29,5 +29,19 @@ namespace CatastropheZ
 
             Equipped = true; // Add a check here later to see if the player's active slot is this weapon, if so set equipped to true
         }
+
+        public void Fire()
+        {
+            if (Equipped == true)
+            {
+                Vector2 tipOffset = new Vector2(20, 0);
+                Vector2 rotatedTipOffset = Vector2.Transform(tipOffset, Matrix.CreateRotationZ(attatchedPlayer.Degrees));
+                Vector2 gunTipPosition = attatchedPlayer.position + rotatedTipOffset;
+                Projectile e = new Projectile(Globals.Textures["Placeholder"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
+                    attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
+
+                Globals.Projectiles.Add(e);
+            }
+        }
     }
 }

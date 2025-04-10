@@ -21,8 +21,11 @@ namespace CatastropheZ
         public Player lockedPlayer;
         public float speed = 1.5f;
         public Point targetGridPos;
+        public Vector2 realTargetGridPos;
         public AStarPathfinder pathfinder;
         public List<Point> path;
+        public float hitCD;
+        public float lastHit;
 
         public Zombie()
         {
@@ -30,6 +33,8 @@ namespace CatastropheZ
             rect = new Rectangle(20, random.Next(10, 980), 25, 25);
             text = Globals.Textures["Placeholder"];
             position = new Vector2(rect.X, rect.Y);
+
+            hitCD = 1000;
 
             int tileSize = 40;
             pathfinder = new AStarPathfinder(Globals.ActiveLevel.PathfindingData);
@@ -43,16 +48,15 @@ namespace CatastropheZ
                     if (Globals.ActiveLevel.PathfindingData[x, y].CollisionType == 2)
                     {
                         targetGridPos = new Point(x, y);
+                        realTargetGridPos = new Vector2(Globals.ActiveLevel.PathfindingData[x, y].Rect.X, Globals.ActiveLevel.PathfindingData[x, y].Rect.Y);
                         break;
                     }
                 }
             }
-            Console.WriteLine("Zombie Grid Pos: " + zombieGridPos);
-            Console.WriteLine("Target Grid Pos: " + targetGridPos);
             bool startWalkable = Globals.ActiveLevel.PathfindingData[zombieGridPos.X, zombieGridPos.Y].CollisionType != 0;
             bool targetWalkable = Globals.ActiveLevel.PathfindingData[targetGridPos.X, targetGridPos.Y].CollisionType != 0;
-            Console.WriteLine("Start Walkable: " + startWalkable);
-            Console.WriteLine("Target Walkable: " + targetWalkable);
+
+            if (!startWalkable || !targetWalkable) { Console.WriteLine("UNABLE TO WALK TO TARGET"); }
 
             path = pathfinder.FindPath(zombieGridPos, targetGridPos);
         }
@@ -62,7 +66,7 @@ namespace CatastropheZ
             foreach (Player player in Globals.Players)
             {
                 int magnitude = Math.Abs(rect.X - player.Rect.X) + Math.Abs(rect.Y - player.Rect.Y);
-                if (magnitude <= 200 && !playerLocked && path.Count > 0)
+                if (!player.isDead && magnitude <= 200 && !playerLocked && path.Count > 0)
                 {
                     speed = 2f;
                     playerLocked = true;
@@ -89,16 +93,49 @@ namespace CatastropheZ
                     direction.Normalize();
                     position += direction * speed;
                 }
+
+                float cureMag = Vector2.Distance(position, realTargetGridPos);
+                if (cureMag <= 35)
+                {
+                    if (Globals.gameTime.TotalGameTime.TotalMilliseconds - lastHit >= hitCD)
+                    {
+                        Globals.ActiveLevel.cureHP = Math.Max(0, Globals.ActiveLevel.cureHP -= 3);
+                        lastHit = (float)Globals.gameTime.TotalGameTime.TotalMilliseconds;
+                    }
+                }
             }
             else if (playerLocked)
             {
                 Vector2 direction = lockedPlayer.position - position;
                 direction.Normalize();
                 position += direction * speed;
+
+                if (lockedPlayer.Health <= 0)
+                {
+                    playerLocked = false;
+                }
+
+                float plrMag = Vector2.Distance(position, lockedPlayer.position);
+                if (plrMag <= 35)
+                {
+                    if (Globals.gameTime.TotalGameTime.TotalMilliseconds - lastHit >= hitCD)
+                    {
+                        lockedPlayer.Health = Math.Max(0, lockedPlayer.Health -= 3);
+                        lastHit = (float)Globals.gameTime.TotalGameTime.TotalMilliseconds;
+                    }
+                }
             }
             else // either at the cure or the map has an error
             {
-
+                float cureMag = Vector2.Distance(position, realTargetGridPos);
+                if (cureMag <= 35)
+                {
+                    if (Globals.gameTime.TotalGameTime.TotalMilliseconds - lastHit >= hitCD)
+                    {
+                        Globals.ActiveLevel.cureHP = Math.Max(0, Globals.ActiveLevel.cureHP -= 3);
+                        lastHit = (float)Globals.gameTime.TotalGameTime.TotalMilliseconds;
+                    }
+                }
             }
 
             Point zombieGridPos = new Point((int)(position.X / 40), (int)(position.Y / 40));

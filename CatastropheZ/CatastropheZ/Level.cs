@@ -18,6 +18,7 @@ namespace CatastropheZ
         public Tile[,] PathfindingData;
         public List<Zombie> Zombies;
         public string LevelName;
+        public float cureHP;
 
         public Level(string levelname)
         {
@@ -25,6 +26,7 @@ namespace CatastropheZ
             TileData = new Tile[84,54];
             PathfindingData = new Tile[42, 27];
             Zombies = new List<Zombie>();
+            cureHP = 200;
             Read();
         }
 

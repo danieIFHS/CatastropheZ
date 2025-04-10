@@ -62,7 +62,9 @@ namespace CatastropheZ
 
             // TODO: use this.Content to load your game content here
             Globals.Textures["Placeholder"] = this.Content.Load<Texture2D>("images");
+            Globals.Textures["Cat1"] = this.Content.Load<Texture2D>("Cat");
             Globals.Font = this.Content.Load<SpriteFont>("Font");
+            Globals.FontBig = this.Content.Load<SpriteFont>("Font2");
 
             string[] files = Directory.GetFiles("Content\\Sprites\\Tiles");
             for (int i = 0; i < files.Count(); i++)
@@ -82,7 +84,7 @@ namespace CatastropheZ
                 GamePadState state = GamePad.GetState(i);
                 if (state.IsConnected)
                 {
-                    Player e = new Player(i, new Rectangle(30, 30, 30, 30), Globals.Textures["Placeholder"]);
+                    Player e = new Player(i, new Rectangle(600, 30, 30, 30), Globals.Textures["Placeholder"]);
                     Globals.Players.Add(e);
                     plrCount++;
                 }
@@ -159,6 +161,17 @@ namespace CatastropheZ
             spriteBatch.Begin();
             Globals.Batch = spriteBatch;
 
+            if (Globals.InGame)
+            {
+                drawMainGame();
+            }
+
+            spriteBatch.End();
+            base.Draw(gameTime);
+        }
+
+        public void drawMainGame()
+        {
             for (int i = 0; i < Globals.ActiveLevel.TileData.GetLength(0); i++)
             {
                 for (int j = 0; j < Globals.ActiveLevel.TileData.GetLength(1); j++)
@@ -190,9 +203,14 @@ namespace CatastropheZ
                 proj.Draw();
             }
 
-            spriteBatch.End();
+            //Match info
+            spriteBatch.Draw(Globals.Textures["Cat1"], new Rectangle(1680, 180, 240, 420), Color.White); // silly little guy
 
-            base.Draw(gameTime);
+            spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(1680, 0, 240, 180), Color.Black);
+            spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(1685, 5, 230, 170), Color.Gray);
+            spriteBatch.DrawString(Globals.FontBig, "Wave - 1", new Vector2(1747, 20), Color.White);
+            spriteBatch.DrawString(Globals.FontBig, "Cure HP", new Vector2(1753, 100), Color.White);
+            spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(1690, 150, (int)(1.1 * Globals.ActiveLevel.cureHP), 20), Color.Red);
         }
     }
 }

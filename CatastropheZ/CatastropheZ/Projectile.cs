@@ -18,9 +18,9 @@ namespace CatastropheZ
         float degrees;
         Vector2 velocity;
         Vector2 position;
+        Player origPlayer;
 
-
-        public Projectile(Texture2D _text, Rectangle _rect, float _degrees)
+        public Projectile(Texture2D _text, Rectangle _rect, float _degrees, Player _origPlayer)
         {
             text = _text;
             rect = _rect;
@@ -28,6 +28,8 @@ namespace CatastropheZ
             float veloAngle = degrees;
             velocity = new Vector2((float)Math.Cos(veloAngle) * 30f, (float)Math.Sin(veloAngle) * 30f);
             position = new Vector2(rect.X, rect.Y);
+
+            origPlayer = _origPlayer;
         }
 
         public void Update()
@@ -49,6 +51,7 @@ namespace CatastropheZ
                     {
                         if (Globals.Projectiles[v].rect == rect)
                         {
+                            if (origPlayer != null) { origPlayer.kills += 1; }
                             Globals.Projectiles.RemoveAt(v);
                             break;
                         }

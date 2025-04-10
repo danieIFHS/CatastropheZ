@@ -19,11 +19,14 @@ namespace CatastropheZ
         public Texture2D Texture;
 
         public float Degrees;
+        public float realDegrees = 0f;
         public Vector2 position;
         public const float Speed = 3f;
         public Color plrColor;
 
         public float Health = 100;
+        public bool isDead = false;
+        public int kills = 0;
 
         public Weapon activeWeapon;
 
@@ -61,37 +64,47 @@ namespace CatastropheZ
 
         public void Update()
         {
-            padState = GamePad.GetState(Index, GamePadDeadZone.Circular);
-
-            Vector2 movementInput = padState.ThumbSticks.Left;
-            Vector2 rotationInput = padState.ThumbSticks.Right;
-
-            Degrees = (float)Math.Atan2(rotationInput.X, rotationInput.Y);
-
-            position.X += movementInput.X * Speed;
-            position.Y -= movementInput.Y * Speed;
-
-            Rect.X = (int)Math.Round(position.X);
-            Rect.Y = (int)Math.Round(position.Y);
-
-            CollisionManager();
-
-            activeWeapon.rect = new Rectangle(Rect.X, Rect.Y, 10, 50);
-            if (padState.Triggers.Right > 0)
+            if (!isDead)
             {
-                if (Globals.gameTime.TotalGameTime.TotalMilliseconds - activeWeapon.lastUsed > activeWeapon.cooldown)
-                {
-                    activeWeapon.lastUsed = (int)Globals.gameTime.TotalGameTime.TotalMilliseconds;
-                    switch (activeWeapon.Type)
-                    {
-                        case "Gun":
-                            activeWeapon.Fire();
-                            break;
+                padState = GamePad.GetState(Index, GamePadDeadZone.Circular);
 
-                        default:
-                            break;
+                Vector2 movementInput = padState.ThumbSticks.Left;
+                Vector2 rotationInput = padState.ThumbSticks.Right;
+
+                if (rotationInput.LengthSquared() > 0.001f) 
+                {
+                    realDegrees = (float)Math.Atan2(rotationInput.X, rotationInput.Y);
+                }
+
+                Degrees = realDegrees;
+
+                position.X += movementInput.X * Speed;
+                position.Y -= movementInput.Y * Speed;
+
+                Rect.X = (int)Math.Round(position.X);
+                Rect.Y = (int)Math.Round(position.Y);
+
+                CollisionManager();
+
+                activeWeapon.rect = new Rectangle(Rect.X, Rect.Y, 10, 50);
+                if (padState.Triggers.Right > 0)
+                {
+                    if (Globals.gameTime.TotalGameTime.TotalMilliseconds - activeWeapon.lastUsed > activeWeapon.cooldown)
+                    {
+                        activeWeapon.lastUsed = (int)Globals.gameTime.TotalGameTime.TotalMilliseconds;
+                        switch (activeWeapon.Type)
+                        {
+                            case "Gun":
+                                activeWeapon.Fire();
+                                break;
+
+                            default:
+                                break;
+                        }
                     }
                 }
+
+                if (Health <= 0) { isDead = true; }
             }
         }
 
@@ -175,7 +188,7 @@ namespace CatastropheZ
 
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1790, 605 + (position * 120), 35, 35), Color.White); // Secondary Weapon
             Globals.Batch.DrawString(Globals.Font, "Health:" + Health.ToString(), new Vector2(1687, 680 + (position * 120)), Color.White); // Health Counter
-            Globals.Batch.DrawString(Globals.Font, "Kills:  " + "999", new Vector2(1827, 605 + (position * 120)), Color.White); // Kill Counter
+            Globals.Batch.DrawString(Globals.Font, "Kills:  " + kills.ToString(), new Vector2(1827, 605 + (position * 120)), Color.White); // Kill Counter
             Globals.Batch.DrawString(Globals.Font, "Z-Coins:" + "999", new Vector2(1827, 620 + (position * 120)), Color.White); // Kill Counter
         }
     }

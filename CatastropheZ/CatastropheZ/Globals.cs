@@ -21,5 +21,6 @@ namespace CatastropheZ
         public static GameTime gameTime;
         public static List<Player> Players;
         public static SpriteFont Font;
+        public static SpriteFont FontBig;
     }
 }
