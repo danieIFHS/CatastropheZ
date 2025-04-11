@@ -217,6 +217,7 @@ namespace CatastropheZ
             // when spawning on the upper half, the pathfinding decides to go offmap for some reason, which gets it stuck with the clamp function (fix later please)
             rect.X = (int)Math.Round(position.X);
             rect.Y = (int)Math.Round(position.Y);
+
         }
 
         public void Draw()

@@ -140,7 +140,7 @@ namespace CatastropheZ
                 }
             }
 
-            if (Timer % 60 == 1)
+            if (Timer % 20 == 1)
             {
                 Globals.ActiveLevel.Zombies.Add(new Zombie());
             }

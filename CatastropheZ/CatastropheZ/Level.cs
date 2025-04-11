@@ -75,13 +75,13 @@ namespace CatastropheZ
                     break;
                 case 'W': // Wall
                     _tile.CollisionType = 0;
-                    _tile.Texture = Globals.Textures["Placeholder"];
+                    _tile.Texture = Globals.Textures["Stone"];
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
-                    _tile.color = Color.Black;
+                    _tile.color = Color.White;
                     break;
                 case 'C': // Cure
                     _tile.CollisionType = 2;
-                    _tile.Texture = Globals.Textures["Placeholder"];
+                    _tile.Texture = Globals.Textures["Cure"];
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
                     _tile.color = Color.White;
                     break;
