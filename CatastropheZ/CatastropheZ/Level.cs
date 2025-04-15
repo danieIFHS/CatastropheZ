@@ -19,6 +19,15 @@ namespace CatastropheZ
         public List<Zombie> Zombies;
         public string LevelName;
         public float cureHP;
+        public int waves;
+        public int currentWave;
+        public int zombies;
+        public int spawnDelay;
+        public int deadZombies;
+        public int spawnedZombies;
+        public double toSpawn;
+        public double lastSpawn;
+        public bool isLoaded;
 
         public Level(string levelname)
         {
@@ -26,7 +35,8 @@ namespace CatastropheZ
             TileData = new Tile[84,54];
             PathfindingData = new Tile[42, 27];
             Zombies = new List<Zombie>();
-            cureHP = 200;
+            currentWave = 1;
+            lastSpawn = -9999;
             Read();
         }
 
@@ -41,13 +51,31 @@ namespace CatastropheZ
                     int yCount = 0;
                     while (!Reader.EndOfStream)
                     {
+                        bool data = false;
                         string Line = Reader.ReadLine();
                         foreach (char c in Line)
                         {
+                            if (yCount >= 54)
+                            {
+                                data = true;
+                                break;
+                            }
                             Tile e = new Tile();
                             HandleTile(e, c, xCount, yCount);
                             TileData[xCount, yCount] = e;
                             xCount++;
+                        }
+                        if (data)
+                        {
+                            string[] info = Line.Split(',');
+                            Console.WriteLine(info);
+                            waves = Convert.ToInt32(info[0]);
+                            cureHP = Convert.ToInt32(info[1]);
+                            zombies = Convert.ToInt32(info[2]);
+                            spawnDelay = Convert.ToInt32(info[3]);
+
+                            toSpawn = Math.Round((double)zombies * (double)Math.Ceiling((double)currentWave / 2));
+                            break;
                         }
                         yCount++;
                         xCount = 0;
@@ -127,6 +155,34 @@ namespace CatastropheZ
                         Console.WriteLine("Found Cure");
                     }
                 }
+            }
+            isLoaded = true;
+            Console.WriteLine("Level Loaded");
+        }
+
+        public void Update()
+        {   
+            if (waves != currentWave && spawnedZombies < toSpawn && Globals.gameTime.TotalGameTime.TotalMilliseconds - lastSpawn >= spawnDelay)
+            {
+                Zombie e = new Zombie();
+                Zombies.Add(e);
+                lastSpawn = Globals.gameTime.TotalGameTime.TotalMilliseconds;
+                spawnedZombies++;
+            }
+
+            if (waves != currentWave && deadZombies == toSpawn)
+            {
+                Console.WriteLine("Wave Beaten");
+                deadZombies = 0;
+                toSpawn = 0;
+                spawnedZombies = 0;
+                currentWave++;
+                toSpawn = Math.Round((double)zombies * (double)Math.Ceiling((double)currentWave / 2));
+            }
+
+            if (currentWave == waves)
+            {
+                Console.WriteLine("You won yippe");
             }
         }
     }

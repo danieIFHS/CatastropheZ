@@ -41,12 +41,30 @@ namespace CatastropheZ
             rect.X = (int)Math.Round(position.X);
             rect.Y = (int)Math.Round(position.Y);
 
+            for (int v = 0; v < Globals.Projectiles.Count; v++)
+            {
+                if (Globals.Projectiles[v].rect == rect)
+                {
+                    if (Globals.Projectiles[v].rect.X > 1680 || Globals.Projectiles[v].rect.X < 0)
+                    {
+                        Globals.Projectiles.RemoveAt(v);
+                        break;
+                    }
+                    if (Globals.Projectiles[v].rect.Y > 1080 || Globals.Projectiles[v].rect.Y < 0)
+                    {
+                        Globals.Projectiles.RemoveAt(v);
+                        break;
+                    }
+                }
+            }
+
             for (int i = 0; i < Globals.ActiveLevel.Zombies.Count; i++)
             {
                 if (rect.Intersects(Globals.ActiveLevel.Zombies[i].rect))
                 {
                     Globals.ActiveLevel.Zombies.RemoveAt(i);
-                    
+                    Globals.ActiveLevel.deadZombies += 1;
+
                     for (int v = 0; v < Globals.Projectiles.Count; v++)
                     {
                         if (Globals.Projectiles[v].rect == rect)

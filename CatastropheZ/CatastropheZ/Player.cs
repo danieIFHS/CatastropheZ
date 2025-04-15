@@ -34,29 +34,33 @@ namespace CatastropheZ
         {
             Index = plrindex;
             Rect = rect;
-            Texture = texture;
             position = new Vector2(rect.X, rect.Y);
 
             activeWeapon = new Weapon(this, Globals.Textures["Placeholder"], "Gun");
-            activeWeapon.cooldown = 110;
+            activeWeapon.cooldown = 50;
             activeWeapon.lastUsed = -5000;
 
-            switch (plrindex)
+            switch (plrindex) 
             {
                 case PlayerIndex.One:
-                    plrColor = Color.Red;
+                    plrColor = Color.Yellow;
+                    Texture = Globals.Textures["Yellow"];
                     break;
                 case PlayerIndex.Two:
                     plrColor = Color.Blue;
+                    Texture = Globals.Textures["Placeholder"];
                     break;
                 case PlayerIndex.Three:
-                    plrColor = Color.Yellow;
+                    plrColor = Color.Red;
+                    Texture = Globals.Textures["Placeholder"];
                     break;
                 case PlayerIndex.Four:
                     plrColor = Color.Green;
+                    Texture = Globals.Textures["Placeholder"];
                     break;
                 default:
                     plrColor = Color.White;
+                    Texture = Globals.Textures["Placeholder"];
                     break;
             }
 
@@ -182,7 +186,7 @@ namespace CatastropheZ
             //Player info box
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1680, 600 + (position * 120), 240, 120), plrColor);
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1685, 605 + (position * 120), 230, 110), Color.DimGray);
-            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1685, 605 + (position * 120), 60, 60), Color.AliceBlue); // Player icon
+            Globals.Batch.Draw(Globals.Textures["YellowIcon"], new Rectangle(1685, 605 + (position * 120), 60, 60), Color.AliceBlue); // Player icon
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1687, 698 + (position * 120), (int)(2.265 * Health), 15), Color.Red); // Health bar
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1750, 605 + (position * 120), 35, 35), Color.White); // Primary Weapon
 

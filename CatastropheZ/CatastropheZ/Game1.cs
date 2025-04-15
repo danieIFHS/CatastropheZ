@@ -43,7 +43,6 @@ namespace CatastropheZ
 
             Globals.Textures = new Dictionary<string, Texture2D>();
             Globals.Batch = spriteBatch;
-            Globals.InGame = true;
             Globals.Projectiles = new List<Projectile>();
             Globals.gameTime = null;
             Globals.Players = new List<Player>();
@@ -66,11 +65,18 @@ namespace CatastropheZ
             Globals.Font = this.Content.Load<SpriteFont>("Font");
             Globals.FontBig = this.Content.Load<SpriteFont>("Font2");
 
-            string[] files = Directory.GetFiles("Content\\Sprites\\Tiles");
-            for (int i = 0; i < files.Count(); i++)
+            string[] Tiles = Directory.GetFiles("Content\\Sprites\\Tiles");
+            for (int i = 0; i < Tiles.Count(); i++)
             {
-                string sub = files[i].Substring(8, files[i].Length - 12);
+                string sub = Tiles[i].Substring(8, Tiles[i].Length - 12);
                 Globals.Textures[sub.Substring(14)] = this.Content.Load<Texture2D>(sub);
+            }
+
+            string[] plrTexts = Directory.GetFiles("Content\\Sprites\\Players");
+            for (int i = 0; i < plrTexts.Count(); i++)
+            {
+                string sub = plrTexts[i].Substring(8, plrTexts[i].Length - 12);
+                Globals.Textures[sub.Substring(16)] = this.Content.Load<Texture2D>(sub);
             }
 
             foreach (KeyValuePair<string, Texture2D> entry in Globals.Textures)
@@ -91,11 +97,7 @@ namespace CatastropheZ
             }
 
             Globals.ActiveLevel = new Level("TestLevel");
-
-            for (int i = 0; i < 30; i++)
-            {
-                Globals.ActiveLevel.Zombies.Add(new Zombie());
-            } // THIS IS FOR TESTS ^^^^
+            Globals.InGame = true;
         }
 
         /// <summary>
@@ -125,24 +127,20 @@ namespace CatastropheZ
 
             if (Globals.InGame)
             {
+                Globals.ActiveLevel.Update();
                 foreach (Player player in Globals.Players)
                 {
                     player.Update();
                 }
-                foreach (Projectile proj in Globals.Projectiles.ToList<Projectile>())
+                foreach (Zombie zombie in Globals.ActiveLevel.Zombies)
+                {
+                    zombie.Update();
+                }
+                foreach (Projectile proj in Globals.Projectiles.ToList())
                 {
                     proj.Update();
 
                 }
-                foreach(Zombie zombie in Globals.ActiveLevel.Zombies)
-                {
-                    zombie.Update();
-                }
-            }
-
-            if (Timer % 20 == 1)
-            {
-                Globals.ActiveLevel.Zombies.Add(new Zombie());
             }
 
             Timer++;
@@ -208,7 +206,7 @@ namespace CatastropheZ
 
             spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(1680, 0, 240, 180), Color.Black);
             spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(1685, 5, 230, 170), Color.Gray);
-            spriteBatch.DrawString(Globals.FontBig, "Wave - 1", new Vector2(1747, 20), Color.White);
+            spriteBatch.DrawString(Globals.FontBig, "Wave - " + Globals.ActiveLevel.currentWave.ToString(), new Vector2(1747, 20), Color.White);
             spriteBatch.DrawString(Globals.FontBig, "Cure HP", new Vector2(1753, 100), Color.White);
             spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(1690, 150, (int)(1.1 * Globals.ActiveLevel.cureHP), 20), Color.Red);
         }
