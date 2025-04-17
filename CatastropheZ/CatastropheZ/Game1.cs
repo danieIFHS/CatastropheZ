@@ -62,6 +62,7 @@ namespace CatastropheZ
             // TODO: use this.Content to load your game content here
             Globals.Textures["Placeholder"] = this.Content.Load<Texture2D>("images");
             Globals.Textures["Cat1"] = this.Content.Load<Texture2D>("Cat");
+            Globals.Textures["Border"] = this.Content.Load<Texture2D>("Border");
             Globals.Font = this.Content.Load<SpriteFont>("Font");
             Globals.FontBig = this.Content.Load<SpriteFont>("Font2");
 
@@ -125,7 +126,7 @@ namespace CatastropheZ
             // TODO: Add your update logic here
             Globals.gameTime = gameTime;
 
-            if (Globals.InGame)
+            if (Globals.InGame && !Globals.ActiveLevel.isBeaten)
             {
                 Globals.ActiveLevel.Update();
                 foreach (Player player in Globals.Players)
@@ -139,8 +140,15 @@ namespace CatastropheZ
                 foreach (Projectile proj in Globals.Projectiles.ToList())
                 {
                     proj.Update();
-
                 }
+            }
+            else if (Globals.ActiveLevel.isBeaten)
+            {
+                foreach (Projectile proj in Globals.Projectiles.ToList())
+                {
+                    proj.Update();
+                }
+
             }
 
             Timer++;

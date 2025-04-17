@@ -28,6 +28,7 @@ namespace CatastropheZ
         public double toSpawn;
         public double lastSpawn;
         public bool isLoaded;
+        public bool isBeaten;
 
         public Level(string levelname)
         {
@@ -162,25 +163,47 @@ namespace CatastropheZ
 
         public void Update()
         {   
-            if (waves != currentWave && spawnedZombies < toSpawn && Globals.gameTime.TotalGameTime.TotalMilliseconds - lastSpawn >= spawnDelay)
+            if (!isBeaten && waves + 1 != currentWave && spawnedZombies < toSpawn && Globals.gameTime.TotalGameTime.TotalMilliseconds - lastSpawn >= spawnDelay)
             {
-                Zombie e = new Zombie();
+                Rectangle rect = new Rectangle(0, 0, 0, 0);
+                Random random = new Random(Guid.NewGuid().GetHashCode());
+                int where = random.Next(1, 5);
+                switch (where)
+                {
+                    case 1:
+                        rect = new Rectangle(20, random.Next(10, 980), 25, 25);
+                        break;
+                    case 2:
+                        rect = new Rectangle(random.Next(10, 980), 15, 25, 25);
+                        break;
+                    case 3:
+                        rect = new Rectangle(1600, random.Next(10, 980), 25, 25);
+                        break;
+                    case 4:
+                        rect = new Rectangle(random.Next(10, 980), 1065, 25, 25);
+                        break;
+                    default:
+                        Console.WriteLine("random error");
+                        break;
+                }
+                Zombie e = new Zombie(rect);
                 Zombies.Add(e);
                 lastSpawn = Globals.gameTime.TotalGameTime.TotalMilliseconds;
                 spawnedZombies++;
             }
 
-            if (waves != currentWave && deadZombies == toSpawn)
+            if (!isBeaten && waves + 1 != currentWave && deadZombies == toSpawn)
             {
                 Console.WriteLine("Wave Beaten");
                 deadZombies = 0;
                 toSpawn = 0;
                 spawnedZombies = 0;
-                currentWave++;
+                if (currentWave + 1 >= waves) { isBeaten = true; }
+                currentWave = Math.Min(waves, currentWave += 1);
                 toSpawn = Math.Round((double)zombies * (double)Math.Ceiling((double)currentWave / 2));
             }
 
-            if (currentWave == waves)
+            if (isBeaten)
             {
                 Console.WriteLine("You won yippe");
             }

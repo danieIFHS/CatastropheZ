@@ -17,15 +17,23 @@ namespace CatastropheZ
         public Texture2D texture;
         public bool Equipped;
         public string Type;
-        public Rectangle rect;
+        public Vector2 size;
+        public Texture2D icon;
+        public int offset;
+        public int slot;
         public int lastUsed;
         public int cooldown;
 
-        public Weapon(Player _player, Texture2D _texture, string _Type)
+        public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot)
         {
             attatchedPlayer = _player;
             texture = _texture;
             Type = _Type;
+
+            size = _size;
+            icon = _icon;
+            offset = _offset;
+            slot = _slot;
 
             Equipped = true; // Add a check here later to see if the player's active slot is this weapon, if so set equipped to true
         }

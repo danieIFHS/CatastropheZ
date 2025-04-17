@@ -15,8 +15,10 @@ namespace CatastropheZ
     {
         public PlayerIndex Index;
         public GamePadState padState;
+        public GamePadState oldPadState;
         public Rectangle Rect;
         public Texture2D Texture;
+        public Texture2D iconText;
 
         public float Degrees;
         public float realDegrees = 0f;
@@ -28,7 +30,9 @@ namespace CatastropheZ
         public bool isDead = false;
         public int kills = 0;
 
+        public List<Weapon> Weapons;
         public Weapon activeWeapon;
+        public int wepIndex;
 
         public Player(PlayerIndex plrindex, Rectangle rect, Texture2D texture)
         {
@@ -36,31 +40,59 @@ namespace CatastropheZ
             Rect = rect;
             position = new Vector2(rect.X, rect.Y);
 
-            activeWeapon = new Weapon(this, Globals.Textures["Placeholder"], "Gun");
-            activeWeapon.cooldown = 50;
-            activeWeapon.lastUsed = -5000;
+            Weapons = new List<Weapon>();
+            Weapon e = new Weapon( //Default primary
+                this,
+                Globals.Textures["Placeholder"],
+                "Gun",
+                new Vector2(10, 50),
+                Globals.Textures["Placeholder"],
+                -350,
+                1);
+            e.cooldown = 50;
+            e.lastUsed = -5000;
+            Weapons.Add(e);
+            activeWeapon = Weapons[0];
+            wepIndex = 0;
+
+            Weapon b = new Weapon( //Default secondary
+                this,
+                Globals.Textures["Placeholder"],
+                "Gun",
+                new Vector2(10, 80),
+                Globals.Textures["Placeholder"],
+                -350,
+                1);
+            b.cooldown = 1;
+            b.lastUsed = -5000;
+            Weapons.Add(b);
 
             switch (plrindex) 
             {
                 case PlayerIndex.One:
-                    plrColor = Color.Yellow;
-                    Texture = Globals.Textures["Yellow"];
+                    plrColor = Color.Red;
+                    Texture = Globals.Textures["Red"];
+                    iconText = Globals.Textures["RedIcon"];
                     break;
                 case PlayerIndex.Two:
                     plrColor = Color.Blue;
-                    Texture = Globals.Textures["Placeholder"];
+                    Texture = Globals.Textures["Blue"];
+                    iconText = Globals.Textures["BlueIcon"];
                     break;
                 case PlayerIndex.Three:
-                    plrColor = Color.Red;
-                    Texture = Globals.Textures["Placeholder"];
+                    plrColor = Color.Yellow;
+                    Texture = Globals.Textures["Yellow"];
+                    iconText = Globals.Textures["YellowIcon"];
                     break;
                 case PlayerIndex.Four:
                     plrColor = Color.Green;
-                    Texture = Globals.Textures["Placeholder"];
+                    Texture = Globals.Textures["Green"];
+                    iconText = Globals.Textures["GreenIcon"];
                     break;
                 default:
                     plrColor = Color.White;
                     Texture = Globals.Textures["Placeholder"];
+                    iconText = Globals.Textures["Placeholder"];
                     break;
             }
 
@@ -90,7 +122,6 @@ namespace CatastropheZ
 
                 CollisionManager();
 
-                activeWeapon.rect = new Rectangle(Rect.X, Rect.Y, 10, 50);
                 if (padState.Triggers.Right > 0)
                 {
                     if (Globals.gameTime.TotalGameTime.TotalMilliseconds - activeWeapon.lastUsed > activeWeapon.cooldown)
@@ -108,7 +139,34 @@ namespace CatastropheZ
                     }
                 }
 
+                if (padState.Buttons.RightShoulder > 0 && oldPadState.Buttons.RightShoulder == 0)
+                {
+                    if (wepIndex == Weapons.Count - 1)
+                    {
+                        wepIndex = 0;
+                    }
+                    else
+                    {
+                        wepIndex = wepIndex + 1;
+                    }
+                    activeWeapon = Weapons[wepIndex];
+                }
+                if (padState.Buttons.LeftShoulder > 0 && oldPadState.Buttons.LeftShoulder == 0)
+                {
+                    if (wepIndex == 0)
+                    {
+                        wepIndex = Weapons.Count - 1;
+                    }
+                    else
+                    {
+                        wepIndex = wepIndex - 1;
+                    }
+                    activeWeapon = Weapons[wepIndex];
+                }
+
                 if (Health <= 0) { isDead = true; }
+
+                oldPadState = padState;
             }
         }
 
@@ -175,25 +233,37 @@ namespace CatastropheZ
 
             Globals.Batch.Draw(
                 activeWeapon.texture,
-                activeWeapon.rect,
+                new Rectangle(Rect.X, Rect.Y, (int)activeWeapon.size.X, (int)activeWeapon.size.Y),
                 new Rectangle(0, 0, activeWeapon.texture.Width, activeWeapon.texture.Height),
                 Color.Red,
-                Degrees,
-                new Vector2(-350, activeWeapon.texture.Height / 2),
+                Degrees,//-350
+                new Vector2(activeWeapon.offset, activeWeapon.texture.Height / 2),
                 SpriteEffects.None,
                 1);
 
             //Player info box
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1680, 600 + (position * 120), 240, 120), plrColor);
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1685, 605 + (position * 120), 230, 110), Color.DimGray);
-            Globals.Batch.Draw(Globals.Textures["YellowIcon"], new Rectangle(1685, 605 + (position * 120), 60, 60), Color.AliceBlue); // Player icon
+            Globals.Batch.Draw(iconText, new Rectangle(1685, 605 + (position * 120), 60, 60), Color.AliceBlue); // Player icon
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1687, 698 + (position * 120), (int)(2.265 * Health), 15), Color.Red); // Health bar
-            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1750, 605 + (position * 120), 35, 35), Color.White); // Primary Weapon
-
-            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1790, 605 + (position * 120), 35, 35), Color.White); // Secondary Weapon
             Globals.Batch.DrawString(Globals.Font, "Health:" + Health.ToString(), new Vector2(1687, 680 + (position * 120)), Color.White); // Health Counter
             Globals.Batch.DrawString(Globals.Font, "Kills:  " + kills.ToString(), new Vector2(1827, 605 + (position * 120)), Color.White); // Kill Counter
             Globals.Batch.DrawString(Globals.Font, "Z-Coins:" + "999", new Vector2(1827, 620 + (position * 120)), Color.White); // Kill Counter
+
+            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1750, 605 + (position * 120), 35, 35), Color.White); // Primary Weapon
+            if (Weapons.Count == 2)
+            {
+                Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1790, 605 + (position * 120), 35, 35), Color.White); // Secondary Weapon
+            }
+            if (wepIndex == 0)
+            {
+                Globals.Batch.Draw(Globals.Textures["Border"], new Rectangle(1750, 605 + (position * 120), 35, 35), Color.Red);
+            }
+            else if (wepIndex == 1)
+            {
+                Globals.Batch.Draw(Globals.Textures["Border"], new Rectangle(1790, 605 + (position * 120), 35, 35), Color.Red); 
+            }
+
         }
     }
 }

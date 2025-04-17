@@ -27,10 +27,9 @@ namespace CatastropheZ
         public float hitCD;
         public float lastHit;
 
-        public Zombie()
+        public Zombie(Rectangle _rect)
         {
-            Random random = new Random(Guid.NewGuid().GetHashCode());
-            rect = new Rectangle(20, random.Next(10, 980), 25, 25);
+            rect = _rect;
             text = Globals.Textures["Placeholder"];
             position = new Vector2(rect.X, rect.Y);
 
@@ -63,6 +62,7 @@ namespace CatastropheZ
 
         public void Update()
         {
+            float cureMag;
             foreach (Player player in Globals.Players)
             {
                 int magnitude = Math.Abs(rect.X - player.Rect.X) + Math.Abs(rect.Y - player.Rect.Y);
@@ -94,7 +94,7 @@ namespace CatastropheZ
                     position += direction * speed;
                 }
 
-                float cureMag = Vector2.Distance(position, realTargetGridPos);
+                cureMag = Vector2.Distance(position, realTargetGridPos);
                 if (cureMag <= 35)
                 {
                     if (Globals.gameTime.TotalGameTime.TotalMilliseconds - lastHit >= hitCD)
@@ -127,14 +127,15 @@ namespace CatastropheZ
             }
             else // either at the cure or the map has an error
             {
-                float cureMag = Vector2.Distance(position, realTargetGridPos);
-                if (cureMag <= 35)
+                
+            }
+            cureMag = Vector2.Distance(position, realTargetGridPos);
+            if (cureMag <= 55)
+            {
+                if (Globals.gameTime.TotalGameTime.TotalMilliseconds - lastHit >= hitCD)
                 {
-                    if (Globals.gameTime.TotalGameTime.TotalMilliseconds - lastHit >= hitCD)
-                    {
-                        Globals.ActiveLevel.cureHP = Math.Max(0, Globals.ActiveLevel.cureHP -= 3);
-                        lastHit = (float)Globals.gameTime.TotalGameTime.TotalMilliseconds;
-                    }
+                    Globals.ActiveLevel.cureHP = Math.Max(0, Globals.ActiveLevel.cureHP -= 3);
+                    lastHit = (float)Globals.gameTime.TotalGameTime.TotalMilliseconds;
                 }
             }
 
