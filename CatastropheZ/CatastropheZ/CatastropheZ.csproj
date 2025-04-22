@@ -64,6 +64,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="RectangleExtensions.cs" />
+    <Compile Include="Shopkeeper.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Weapon.cs" />
     <Compile Include="Zombie.cs" />

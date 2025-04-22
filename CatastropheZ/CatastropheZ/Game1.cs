@@ -141,6 +141,10 @@ namespace CatastropheZ
                 {
                     proj.Update();
                 }
+                if (Globals.ActiveLevel.inBetween)
+                {
+                    Globals.ActiveLevel.shopkeeper.Update();
+                }
             }
             else if (Globals.ActiveLevel.isBeaten)
             {
@@ -209,8 +213,13 @@ namespace CatastropheZ
                 proj.Draw();
             }
 
-            //Match info
             spriteBatch.Draw(Globals.Textures["Cat1"], new Rectangle(1680, 180, 240, 420), Color.White); // silly little guy
+            if (Globals.ActiveLevel.inBetween)
+            {
+                Globals.ActiveLevel.shopkeeper.Draw();
+            }
+
+            //Match info
 
             spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(1680, 0, 240, 180), Color.Black);
             spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(1685, 5, 230, 170), Color.Gray);

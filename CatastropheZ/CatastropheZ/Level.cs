@@ -29,6 +29,9 @@ namespace CatastropheZ
         public double lastSpawn;
         public bool isLoaded;
         public bool isBeaten;
+        public bool inBetween;
+        public Shopkeeper shopkeeper;
+        public List<Player> inShop;
 
         public Level(string levelname)
         {
@@ -38,6 +41,10 @@ namespace CatastropheZ
             Zombies = new List<Zombie>();
             currentWave = 1;
             lastSpawn = -9999;
+
+            shopkeeper = new Shopkeeper();
+            inShop = new List<Player>();
+
             Read();
         }
 
@@ -114,6 +121,12 @@ namespace CatastropheZ
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
                     _tile.color = Color.White;
                     break;
+                case 'S': // Shopkeeper
+                    _tile.CollisionType = 1;
+                    _tile.Texture = Globals.Textures["Cat1"];
+                    _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
+                    _tile.color = Color.White;
+                    break;
             }
         }
 
@@ -163,49 +176,58 @@ namespace CatastropheZ
 
         public void Update()
         {   
-            if (!isBeaten && waves + 1 != currentWave && spawnedZombies < toSpawn && Globals.gameTime.TotalGameTime.TotalMilliseconds - lastSpawn >= spawnDelay)
+            if (inBetween)
             {
-                Rectangle rect = new Rectangle(0, 0, 0, 0);
-                Random random = new Random(Guid.NewGuid().GetHashCode());
-                int where = random.Next(1, 5);
-                switch (where)
+                shopkeeper.draw = true;
+            }
+            else
+            {
+                if (!isBeaten && waves + 1 != currentWave && spawnedZombies < toSpawn && Globals.gameTime.TotalGameTime.TotalMilliseconds - lastSpawn >= spawnDelay)
                 {
-                    case 1:
-                        rect = new Rectangle(20, random.Next(10, 980), 25, 25);
-                        break;
-                    case 2:
-                        rect = new Rectangle(random.Next(10, 980), 15, 25, 25);
-                        break;
-                    case 3:
-                        rect = new Rectangle(1600, random.Next(10, 980), 25, 25);
-                        break;
-                    case 4:
-                        rect = new Rectangle(random.Next(10, 980), 1065, 25, 25);
-                        break;
-                    default:
-                        Console.WriteLine("random error");
-                        break;
+                    Rectangle rect = new Rectangle(0, 0, 0, 0);
+                    Random random = new Random(Guid.NewGuid().GetHashCode());
+                    int where = random.Next(1, 5);
+                    switch (where)
+                    {
+                        case 1:
+                            rect = new Rectangle(20, random.Next(10, 980), 25, 25);
+                            break;
+                        case 2:
+                            rect = new Rectangle(random.Next(10, 980), 15, 25, 25);
+                            break;
+                        case 3:
+                            rect = new Rectangle(1600, random.Next(10, 980), 25, 25);
+                            break;
+                        case 4:
+                            rect = new Rectangle(random.Next(10, 980), 1065, 25, 25);
+                            break;
+                        default:
+                            Console.WriteLine("random error");
+                            break;
+                    }
+                    Zombie e = new Zombie(rect);
+                    Zombies.Add(e);
+                    lastSpawn = Globals.gameTime.TotalGameTime.TotalMilliseconds;
+                    spawnedZombies++;
                 }
-                Zombie e = new Zombie(rect);
-                Zombies.Add(e);
-                lastSpawn = Globals.gameTime.TotalGameTime.TotalMilliseconds;
-                spawnedZombies++;
-            }
 
-            if (!isBeaten && waves + 1 != currentWave && deadZombies == toSpawn)
-            {
-                Console.WriteLine("Wave Beaten");
-                deadZombies = 0;
-                toSpawn = 0;
-                spawnedZombies = 0;
-                if (currentWave + 1 >= waves) { isBeaten = true; }
-                currentWave = Math.Min(waves, currentWave += 1);
-                toSpawn = Math.Round((double)zombies * (double)Math.Ceiling((double)currentWave / 2));
-            }
+                if (!isBeaten && waves + 1 != currentWave && deadZombies == toSpawn)
+                {
+                    inBetween = true;
+                    shopkeeper.Refresh();
+                    Console.WriteLine("Wave Beaten");
+                    deadZombies = 0;
+                    toSpawn = 0;
+                    spawnedZombies = 0;
+                    if (currentWave + 1 >= waves) { isBeaten = true; }
+                    currentWave = Math.Min(waves, currentWave += 1);
+                    toSpawn = Math.Round((double)zombies * (double)Math.Ceiling((double)currentWave / 2));
+                }
 
-            if (isBeaten)
-            {
-                Console.WriteLine("You won yippe");
+                if (isBeaten)
+                {
+                    Console.WriteLine("You won yippe");
+                }
             }
         }
     }

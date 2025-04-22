@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace CatastropheZ
 {
-    public class Weapon
+    public class Weapon : System.ICloneable
     {
         public Player attatchedPlayer;
         public Texture2D texture;
@@ -50,6 +50,16 @@ namespace CatastropheZ
 
                 Globals.Projectiles.Add(e);
             }
+        }
+
+        public Weapon Clone()
+        {
+            return this.MemberwiseClone() as Weapon; 
+        }
+
+        object System.ICloneable.Clone()
+        {
+            return this.Clone();
         }
     }
 }

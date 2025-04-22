@@ -29,10 +29,13 @@ namespace CatastropheZ
         public float Health = 100;
         public bool isDead = false;
         public int kills = 0;
+        public int ZCoins = 0;
 
         public List<Weapon> Weapons;
         public Weapon activeWeapon;
         public int wepIndex;
+
+        public bool inShop = false;
 
         public Player(PlayerIndex plrindex, Rectangle rect, Texture2D texture)
         {
@@ -164,9 +167,81 @@ namespace CatastropheZ
                     activeWeapon = Weapons[wepIndex];
                 }
 
+                if (padState.Buttons.A > 0 && oldPadState.Buttons.A == 0)
+                {
+                    if (Globals.ActiveLevel.inBetween)
+                    {
+                        Purchase(1);
+                    }
+                }
+                if (padState.Buttons.X > 0 && oldPadState.Buttons.X == 0)
+                {
+                    if (Globals.ActiveLevel.inBetween)
+                    {
+                        Purchase(2);
+                    }
+                }
+                if (padState.Buttons.Y > 0 && oldPadState.Buttons.Y == 0)
+                {
+                    if (Globals.ActiveLevel.inBetween)
+                    {
+                        Purchase(3);
+                    }
+                }
+                if (padState.Buttons.B > 0 && oldPadState.Buttons.B == 0)
+                {
+                    if (Globals.ActiveLevel.inBetween)
+                    {
+                        Purchase(4);
+                    }
+                }
+
+                if (padState.Buttons.Start > 0 && oldPadState.Buttons.Start == 0)
+                {
+                    Globals.ActiveLevel.inBetween = false;
+                }
+
                 if (Health <= 0) { isDead = true; }
 
                 oldPadState = padState;
+            }
+        }
+
+        public void Purchase(int index)
+        {
+            int price = 0;
+            int index2 = 0;
+            switch (index)
+            {
+                case 1:
+                    price = Globals.ActiveLevel.shopkeeper.fPrice;
+                    index2 = Globals.ActiveLevel.shopkeeper.first;
+                    break;
+                case 2:
+                    price = Globals.ActiveLevel.shopkeeper.sPrice;
+                    index2 = Globals.ActiveLevel.shopkeeper.second;
+                    break;
+                case 3:
+                    price = Globals.ActiveLevel.shopkeeper.tPrice;
+                    index2 = Globals.ActiveLevel.shopkeeper.third;
+                    break;
+                case 4:
+                    price = Globals.ActiveLevel.shopkeeper.foPrice;
+                    index2 = Globals.ActiveLevel.shopkeeper.fourth;
+                    break;
+            }
+
+            if (ZCoins > price)
+            {
+                Console.WriteLine("Bought");
+                ZCoins -= price;
+                Weapons[1] = Globals.ActiveLevel.shopkeeper.Weapons[index2].Clone();
+                Weapons[1].cooldown = 50;
+                Weapons[1].lastUsed = -5000;
+            }
+            else
+            {
+                Console.WriteLine("Broke");
             }
         }
 
@@ -248,7 +323,7 @@ namespace CatastropheZ
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1687, 698 + (position * 120), (int)(2.265 * Health), 15), Color.Red); // Health bar
             Globals.Batch.DrawString(Globals.Font, "Health:" + Health.ToString(), new Vector2(1687, 680 + (position * 120)), Color.White); // Health Counter
             Globals.Batch.DrawString(Globals.Font, "Kills:  " + kills.ToString(), new Vector2(1827, 605 + (position * 120)), Color.White); // Kill Counter
-            Globals.Batch.DrawString(Globals.Font, "Z-Coins:" + "999", new Vector2(1827, 620 + (position * 120)), Color.White); // Kill Counter
+            Globals.Batch.DrawString(Globals.Font, "Z-Coins:" + ZCoins.ToString(), new Vector2(1827, 620 + (position * 120)), Color.White); // Kill Counter
 
             Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1750, 605 + (position * 120), 35, 35), Color.White); // Primary Weapon
             if (Weapons.Count == 2)
@@ -262,6 +337,11 @@ namespace CatastropheZ
             else if (wepIndex == 1)
             {
                 Globals.Batch.Draw(Globals.Textures["Border"], new Rectangle(1790, 605 + (position * 120), 35, 35), Color.Red); 
+            }
+
+            if (inShop)
+            {
+                Globals.Batch.DrawString(Globals.Font, "In Shop", new Vector2(1827, 680 + (position * 120)), Color.White);
             }
 
         }
