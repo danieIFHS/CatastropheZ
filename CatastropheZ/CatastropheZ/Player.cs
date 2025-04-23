@@ -51,7 +51,8 @@ namespace CatastropheZ
                 new Vector2(10, 50),
                 Globals.Textures["Placeholder"],
                 -350,
-                1);
+                1,
+                10);
             e.cooldown = 50;
             e.lastUsed = -5000;
             Weapons.Add(e);
@@ -65,6 +66,7 @@ namespace CatastropheZ
                 new Vector2(10, 80),
                 Globals.Textures["Placeholder"],
                 -350,
+                1,
                 1);
             b.cooldown = 1;
             b.lastUsed = -5000;
@@ -230,14 +232,25 @@ namespace CatastropheZ
                     index2 = Globals.ActiveLevel.shopkeeper.fourth;
                     break;
             }
-
-            if (ZCoins > price)
+            Console.WriteLine(index2);
+            if (ZCoins >= price)
             {
                 Console.WriteLine("Bought");
                 ZCoins -= price;
-                Weapons[1] = Globals.ActiveLevel.shopkeeper.Weapons[index2].Clone();
-                Weapons[1].cooldown = 50;
-                Weapons[1].lastUsed = -5000;
+                if (index < 3)
+                {
+                    Weapons[0] = Globals.ActiveLevel.shopkeeper.Weapons[index2].Clone();
+                    Weapons[0].lastUsed = -5000;
+                    Weapons[0].attatchedPlayer = this;
+                    activeWeapon = Weapons[0];
+                }
+                else
+                {
+                    Weapons[1] = Globals.ActiveLevel.shopkeeper.Weapons[index2].Clone();
+                    Weapons[1].lastUsed = -5000;
+                    Weapons[1].attatchedPlayer = this;
+                    activeWeapon = Weapons[1];
+                }
             }
             else
             {

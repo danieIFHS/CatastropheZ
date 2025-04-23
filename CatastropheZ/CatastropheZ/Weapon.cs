@@ -24,7 +24,7 @@ namespace CatastropheZ
         public int lastUsed;
         public int cooldown;
 
-        public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot)
+        public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot, int _cooldown)
         {
             attatchedPlayer = _player;
             texture = _texture;
@@ -35,6 +35,8 @@ namespace CatastropheZ
             offset = _offset;
             slot = _slot;
 
+            cooldown = _cooldown;
+
             Equipped = true; // Add a check here later to see if the player's active slot is this weapon, if so set equipped to true
         }
 
@@ -42,7 +44,7 @@ namespace CatastropheZ
         {
             if (Equipped == true)
             {
-                Vector2 tipOffset = new Vector2(20, 0);
+                Vector2 tipOffset = new Vector2(20, (-size.Y / 2) + 5);
                 Vector2 rotatedTipOffset = Vector2.Transform(tipOffset, Matrix.CreateRotationZ(attatchedPlayer.Degrees));
                 Vector2 gunTipPosition = attatchedPlayer.position + rotatedTipOffset;
                 Projectile e = new Projectile(Globals.Textures["Placeholder"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),

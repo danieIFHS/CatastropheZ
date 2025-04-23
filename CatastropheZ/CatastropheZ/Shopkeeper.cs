@@ -29,12 +29,19 @@ namespace CatastropheZ
 
         public string[] data;
 
-        public List<Weapon> Weapons = new List<Weapon>();
+        public List<Weapon> Weapons = new List<Weapon>()
+        {
+            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
+        };
 
         public Shopkeeper()
         {
             data = new string[4];
-            Weapons[4] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 100), Globals.Textures["Placeholder"], -350, 1);
+            Weapons[0] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 100), Globals.Textures["Placeholder"], -350, 1, 1);
+            Weapons[1] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 150), Globals.Textures["Placeholder"], -350, 1, 20);
+            Weapons[2] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 200), Globals.Textures["Placeholder"], -350, 1, 100);
+            Weapons[3] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 250), Globals.Textures["Placeholder"], -350, 1, 200);
+            Weapons[4] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300);
         }
         public void Refresh()
         {
