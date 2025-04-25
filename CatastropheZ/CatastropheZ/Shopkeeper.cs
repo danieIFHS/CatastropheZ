@@ -37,11 +37,11 @@ namespace CatastropheZ
         public Shopkeeper()
         {
             data = new string[4];
-            Weapons[0] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 100), Globals.Textures["Placeholder"], -350, 1, 1);
-            Weapons[1] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 150), Globals.Textures["Placeholder"], -350, 1, 20);
-            Weapons[2] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 200), Globals.Textures["Placeholder"], -350, 1, 100);
-            Weapons[3] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 250), Globals.Textures["Placeholder"], -350, 1, 200);
-            Weapons[4] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300);
+            Weapons[0] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 100), Globals.Textures["Placeholder"], -350, 1, 1, "Blank");
+            Weapons[1] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 150), Globals.Textures["Placeholder"], -350, 1, 20, "Sniper");
+            Weapons[2] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 200), Globals.Textures["Placeholder"], -350, 1, 100, "AK-47");
+            Weapons[3] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 250), Globals.Textures["Placeholder"], -350, 1, 200, "Deagle");
+            Weapons[4] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
         }
         public void Refresh()
         {

@@ -23,8 +23,9 @@ namespace CatastropheZ
         public int slot;
         public int lastUsed;
         public int cooldown;
+        public string name;
 
-        public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot, int _cooldown)
+        public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot, int _cooldown, string _name)
         {
             attatchedPlayer = _player;
             texture = _texture;
@@ -34,6 +35,7 @@ namespace CatastropheZ
             icon = _icon;
             offset = _offset;
             slot = _slot;
+            name = _name;
 
             cooldown = _cooldown;
 
@@ -53,7 +55,7 @@ namespace CatastropheZ
                 Globals.Projectiles.Add(e);
             }
         }
-
+        // probably put sound effects in the fire function, just make a big switch case for each name
         public Weapon Clone()
         {
             return this.MemberwiseClone() as Weapon; 
