@@ -91,17 +91,17 @@ namespace CatastropheZ
                 Console.WriteLine(entry.Key);
             }
 
-            //string[] sfxTexts = Directory.GetFiles("Content\\SFX");
-            //for (int i = 0; i < plrTexts.Count(); i++)
-            //{
-            //    string sub = plrTexts[i].Substring(8, plrTexts[i].Length - 12);
-            //    Globals.SFX[sub.Substring(16)] = this.Content.Load<SoundEffect>(sub); // the 16 will need to change, just keep testing till its right
-            //}
+            string[] sfxTexts = Directory.GetFiles("Content\\SFX");
+            for (int i = 0; i < plrTexts.Count(); i++)
+            {
+                string sub = plrTexts[i].Substring(8, plrTexts[i].Length - 12);
+               /* Globals.SFX[sub.Substring(16)] = this.Content.Load<SoundEffect>(sub);*/ // the 16 will need to change, just keep testing till its right
+            }
 
-            //foreach (KeyValuePair<string, SoundEffect> entry in Globals.SFX)
-            //{
-            //    Console.WriteLine(entry.Key);
-            //}
+            foreach (KeyValuePair<string, SoundEffect> entry in Globals.SFX)
+            {
+                Console.WriteLine(entry.Key);
+            }
 
             int plrCount = 1;
             for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
