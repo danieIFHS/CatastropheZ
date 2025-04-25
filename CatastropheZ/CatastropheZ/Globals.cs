@@ -14,7 +14,7 @@ namespace CatastropheZ
     public class Globals
     {
         public static Dictionary<string, Texture2D> Textures;
-        public static Dictionary<string, SoundEffect> SFX;
+        public static Dictionary<string, Song> SFX;
         public static SpriteBatch Batch;
         public static Level ActiveLevel;
         public static bool InGame;

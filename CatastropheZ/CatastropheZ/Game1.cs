@@ -44,7 +44,7 @@ namespace CatastropheZ
             // TODO: Add your initialization logic here
 
             Globals.Textures = new Dictionary<string, Texture2D>();
-            Globals.SFX = new Dictionary<string, SoundEffect>();
+            Globals.SFX = new Dictionary<string, Song>();
             Globals.Batch = spriteBatch;
             Globals.Projectiles = new List<Projectile>();
             Globals.gameTime = null;
@@ -92,13 +92,13 @@ namespace CatastropheZ
             }
 
             string[] sfxTexts = Directory.GetFiles("Content\\SFX");
-            for (int i = 0; i < plrTexts.Count(); i++)
+            for (int i = 0; i < sfxTexts.Count(); i++)
             {
-                string sub = plrTexts[i].Substring(8, plrTexts[i].Length - 12);
-               /* Globals.SFX[sub.Substring(16)] = this.Content.Load<SoundEffect>(sub);*/ // the 16 will need to change, just keep testing till its right
+                string sub = sfxTexts[i].Substring(8, sfxTexts[i].Length - 12);
+               Globals.SFX[sub.Substring(4)] = this.Content.Load<Song>(sub); // the 16 will need to change, just keep testing till its right
             }
 
-            foreach (KeyValuePair<string, SoundEffect> entry in Globals.SFX)
+            foreach (KeyValuePair<string, Song> entry in Globals.SFX)
             {
                 Console.WriteLine(entry.Key);
             }
