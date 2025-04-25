@@ -92,8 +92,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SFX\gunshot-bolt-action-rifle-fascinatedsound-3-3-00-03.mp3">
-      <Name>gunshot-bolt-action-rifle-fascinatedsound-3-3-00-03</Name>
+    <Compile Include="SFX\Bolt.mp3">
+      <Name>Bolt</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
@@ -141,15 +141,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SFX\gunshot-assult-rifle-fascinatedsound-1-00-01.mp3">
-      <Name>gunshot-assult-rifle-fascinatedsound-1-00-01</Name>
+    <Compile Include="SFX\AK.mp3">
+      <Name>AK</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SFX\gunshot-desert-eagle-pistol-fascinatedsound-1-1-00-01.mp3">
-      <Name>gunshot-desert-eagle-pistol-fascinatedsound-1-1-00-01</Name>
+    <Compile Include="SFX\Deagle.mp3">
+      <Name>Deagle</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
