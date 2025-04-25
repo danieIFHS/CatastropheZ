@@ -52,7 +52,8 @@ namespace CatastropheZ
                 Globals.Textures["Placeholder"],
                 -350,
                 1,
-                10);
+                10,
+                "Blank");
             e.cooldown = 50;
             e.lastUsed = -5000;
             Weapons.Add(e);
@@ -67,7 +68,8 @@ namespace CatastropheZ
                 Globals.Textures["Placeholder"],
                 -350,
                 1,
-                1);
+                1,
+                "Blank");
             b.cooldown = 1;
             b.lastUsed = -5000;
             Weapons.Add(b);
