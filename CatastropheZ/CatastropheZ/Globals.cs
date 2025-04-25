@@ -23,5 +23,6 @@ namespace CatastropheZ
         public static List<Player> Players;
         public static SpriteFont Font;
         public static SpriteFont FontBig;
+        public static Dictionary<string, Level> campaignLevels;
     }
 }

@@ -21,6 +21,7 @@ namespace CatastropheZ
         SpriteBatch spriteBatch;
 
         GamePadState oldP1;
+        int menuState = 0;
 
         int Timer;
 
@@ -45,6 +46,7 @@ namespace CatastropheZ
 
             Globals.Textures = new Dictionary<string, Texture2D>();
             Globals.SFX = new Dictionary<string, Song>();
+            Globals.campaignLevels = new Dictionary<string, Level>();
             Globals.Batch = spriteBatch;
             Globals.Projectiles = new List<Projectile>();
             Globals.gameTime = null;
@@ -86,6 +88,13 @@ namespace CatastropheZ
                 Globals.Textures[sub.Substring(16)] = this.Content.Load<Texture2D>(sub);
             }
 
+            string[] Icons = Directory.GetFiles("Content\\Sprites\\Icons");
+            for (int i = 0; i < Icons.Count(); i++)
+            {
+                string sub = Icons[i].Substring(8, Icons[i].Length - 12);
+                Globals.Textures[sub.Substring(14)] = this.Content.Load<Texture2D>(sub);
+            }
+
             foreach (KeyValuePair<string, Texture2D> entry in Globals.Textures)
             {
                 Console.WriteLine(entry.Key);
@@ -95,12 +104,21 @@ namespace CatastropheZ
             for (int i = 0; i < sfxTexts.Count(); i++)
             {
                 string sub = sfxTexts[i].Substring(8, sfxTexts[i].Length - 12);
-               Globals.SFX[sub.Substring(4)] = this.Content.Load<Song>(sub); // the 16 will need to change, just keep testing till its right
+               Globals.SFX[sub.Substring(4)] = this.Content.Load<Song>(sub); 
             }
 
             foreach (KeyValuePair<string, Song> entry in Globals.SFX)
             {
                 Console.WriteLine(entry.Key);
+            }
+
+            string[] campLevels = Directory.GetFiles("Content\\Levels\\Campaign");
+            for (int i = 0; i < campLevels.Count(); i++)
+            {
+                string sub = campLevels[i].Substring(8, campLevels[i].Length - 12);
+                sub = sub.Substring(16, sub.Length - 16);
+                Console.WriteLine(sub + " | " + campLevels[i]);
+                Globals.campaignLevels[sub] = new Level(sub, "Campaign");
             }
 
             int plrCount = 1;
@@ -115,7 +133,7 @@ namespace CatastropheZ
                 }
             }
 
-            Globals.ActiveLevel = new Level("TestLevel");
+            Globals.ActiveLevel = new Level("TestLevel", "Campaign");
             Globals.InGame = false;
         }
 
@@ -177,7 +195,14 @@ namespace CatastropheZ
             {
                 if (P1State.Buttons.A > 0 && oldP1.Buttons.A <= 0)
                 {
-                    Globals.InGame = true;
+                    if (menuState == 0)
+                    {
+                        Globals.InGame = true;
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
             oldP1 = P1State;
@@ -260,13 +285,34 @@ namespace CatastropheZ
 
         public void drawMenu()
         {
-            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(0, 0, 1920, 1080), Color.DarkRed);
-            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
+            switch (menuState)
+            {
+                case 0:
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(0, 0, 1920, 1080), Color.DarkRed);
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
 
-            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 180, 1320, 50), Color.Red);
-            Globals.Batch.DrawString(Globals.FontBig, "Welcome to Catastrophe Z! Select a campaign level, custom level, or the level creator!", new Vector2(330, 190), Color.White);
-            //Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
-            //Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 180, 1320, 50), Color.Red);
+                    Globals.Batch.DrawString(Globals.FontBig, "Welcome to Catastrophe Z! Select a campaign level, custom level, or the level creator!", new Vector2(350, 190), Color.White);
+
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 260, 1320, 50), Color.Red);
+                    Globals.Batch.Draw(Globals.Textures["AButton"], new Rectangle(300, 260, 50, 50), Color.White);
+                    Globals.Batch.DrawString(Globals.FontBig, " - Campaign Levels", new Vector2(350, 270), Color.White);
+
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 340, 1320, 50), Color.Red);
+                    Globals.Batch.Draw(Globals.Textures["XButton"], new Rectangle(300, 340, 50, 50), Color.White);
+                    Globals.Batch.DrawString(Globals.FontBig, " - Custom Levels", new Vector2(350, 350), Color.White);
+
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 420, 1320, 50), Color.Red);
+                    Globals.Batch.Draw(Globals.Textures["BButton"], new Rectangle(300, 420, 50, 50), Color.White);
+                    Globals.Batch.DrawString(Globals.FontBig, " - Level Creator", new Vector2(350, 430), Color.White);
+                    break;
+                //case 1:
+                //    int inc = 0;
+                //    for (int i = 0; i < )
+                //    break;
+                default:
+                    break;
+            }
         }
     }
 }

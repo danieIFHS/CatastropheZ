@@ -18,6 +18,7 @@ namespace CatastropheZ
         public Tile[,] PathfindingData;
         public List<Zombie> Zombies;
         public string LevelName;
+        public string Path;
         public float cureHP;
         public int waves;
         public int currentWave;
@@ -33,8 +34,9 @@ namespace CatastropheZ
         public Shopkeeper shopkeeper;
         public List<Player> inShop;
 
-        public Level(string levelname)
+        public Level(string levelname, string path)
         {
+            Path = path;
             LevelName = levelname;
             TileData = new Tile[84,54];
             PathfindingData = new Tile[42, 27];
@@ -50,7 +52,7 @@ namespace CatastropheZ
 
         private void Read()
         {
-            StreamReader Reader = new StreamReader(@"Content\Levels\" + LevelName + ".txt");
+            StreamReader Reader = new StreamReader(@"Content\Levels\" + Path + @"\" + LevelName + ".txt");
             try
             {
                 using (Reader)
