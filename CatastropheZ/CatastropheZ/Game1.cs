@@ -143,6 +143,7 @@ namespace CatastropheZ
 
             // TODO: Add your update logic here
             Globals.gameTime = gameTime;
+            GamePadState P1State = GamePad.GetState(PlayerIndex.One);
 
             if (Globals.InGame && !Globals.ActiveLevel.isBeaten)
             {
@@ -174,9 +175,12 @@ namespace CatastropheZ
             }
             else if (!Globals.InGame)
             {
-
+                if (P1State.Buttons.A > 0 && oldP1.Buttons.A <= 0)
+                {
+                    Globals.InGame = true;
+                }
             }
-
+            oldP1 = P1State;
             Timer++;
             base.Update(gameTime);
         }
@@ -199,7 +203,7 @@ namespace CatastropheZ
             }
             else
             {
-
+                drawMenu();
             }
 
             spriteBatch.End();
@@ -252,6 +256,17 @@ namespace CatastropheZ
             spriteBatch.DrawString(Globals.FontBig, "Wave - " + Globals.ActiveLevel.currentWave.ToString(), new Vector2(1747, 20), Color.White);
             spriteBatch.DrawString(Globals.FontBig, "Cure HP", new Vector2(1753, 100), Color.White);
             spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(1690, 150, (int)(1.1 * Globals.ActiveLevel.cureHP), 20), Color.Red);
+        }
+
+        public void drawMenu()
+        {
+            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(0, 0, 1920, 1080), Color.DarkRed);
+            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
+
+            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 180, 1320, 50), Color.Red);
+            Globals.Batch.DrawString(Globals.FontBig, "Welcome to Catastrophe Z! Select a campaign level, custom level, or the level creator!", new Vector2(330, 190), Color.White);
+            //Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
+            //Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
         }
     }
 }
