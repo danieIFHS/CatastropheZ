@@ -91,7 +91,9 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SFX\" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Players\Blue.png">
       <Name>Blue</Name>

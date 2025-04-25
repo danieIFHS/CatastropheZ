@@ -20,6 +20,8 @@ namespace CatastropheZ
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        GamePadState oldP1;
+
         int Timer;
 
         public Game1()
@@ -42,10 +44,13 @@ namespace CatastropheZ
             // TODO: Add your initialization logic here
 
             Globals.Textures = new Dictionary<string, Texture2D>();
+            Globals.SFX = new Dictionary<string, SoundEffect>();
             Globals.Batch = spriteBatch;
             Globals.Projectiles = new List<Projectile>();
             Globals.gameTime = null;
             Globals.Players = new List<Player>();
+
+            oldP1 = GamePad.GetState(PlayerIndex.One);
 
             base.Initialize();
         }
@@ -86,17 +91,17 @@ namespace CatastropheZ
                 Console.WriteLine(entry.Key);
             }
 
-            string[] sfxTexts = Directory.GetFiles("Content\\SFX");
-            for (int i = 0; i < plrTexts.Count(); i++)
-            {
-                string sub = plrTexts[i].Substring(8, plrTexts[i].Length - 12);
-                Globals.SFX[sub.Substring(16)] = this.Content.Load<SoundEffect>(sub); // the 16 will need to change, just keep testing till its right
-            }
+            //string[] sfxTexts = Directory.GetFiles("Content\\SFX");
+            //for (int i = 0; i < plrTexts.Count(); i++)
+            //{
+            //    string sub = plrTexts[i].Substring(8, plrTexts[i].Length - 12);
+            //    Globals.SFX[sub.Substring(16)] = this.Content.Load<SoundEffect>(sub); // the 16 will need to change, just keep testing till its right
+            //}
 
-            foreach (KeyValuePair<string, SoundEffect> entry in Globals.SFX)
-            {
-                Console.WriteLine(entry.Key);
-            }
+            //foreach (KeyValuePair<string, SoundEffect> entry in Globals.SFX)
+            //{
+            //    Console.WriteLine(entry.Key);
+            //}
 
             int plrCount = 1;
             for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
