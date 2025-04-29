@@ -26,7 +26,8 @@ namespace CatastropheZ
         public int lastUsed;
         public int cooldown;
         public string name;
-        public Song weapSound;
+        public int x;
+        
 
         
         public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot, int _cooldown, string _name)
@@ -61,7 +62,11 @@ namespace CatastropheZ
                 Projectile e = new Projectile(Globals.Textures["Placeholder"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
                     attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
 
-                Globals.SFX["Deagle"].Play(); 
+                Globals.SFX["Deagle"].Play();
+                //if (name.Equals("Sniper"))
+                //{
+                //    Globals.SFX["Sniper"].Play();
+                //}
                 Globals.Projectiles.Add(e);
             }
             
