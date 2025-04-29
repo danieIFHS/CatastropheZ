@@ -65,8 +65,14 @@ namespace CatastropheZ
                 {
                     Globals.SFX["Deagle"].Play();
                 }
-                
-               
+                if (name.Equals("Sniper"))
+                {
+                    Globals.SFX["Bolt"].Play();
+                }
+                if (name.Equals("AK-47"))
+                {
+                    Globals.SFX["AK"].Play();
+                }
                 Globals.Projectiles.Add(e);
             }
             
