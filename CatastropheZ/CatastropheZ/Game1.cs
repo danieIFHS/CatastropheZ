@@ -217,7 +217,21 @@ namespace CatastropheZ
                 }
                 if (P1State.Buttons.B > 0 && oldP1.Buttons.B <= 0)
                 {
-                    menuState = 0;
+                    if (menuState == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        menuState = 0;
+                    }
+                }
+                if (P1State.Buttons.Y > 0 && oldP1.Buttons.Y <= 0)
+                {
+                    if (menuState == 0)
+                    {
+                        menuState = 4;
+                    }
                 }
                 if (P1State.DPad.Down == ButtonState.Pressed && oldP1.DPad.Down != ButtonState.Pressed)
                 {
@@ -348,6 +362,10 @@ namespace CatastropheZ
                     Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 420, 1320, 50), Color.Red);
                     Globals.Batch.Draw(Globals.Textures["BButton"], new Rectangle(300, 420, 50, 50), Color.White);
                     Globals.Batch.DrawString(Globals.FontBig, " - Level Creator", new Vector2(350, 430), Color.White);
+
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 500, 1320, 50), Color.Red);
+                    Globals.Batch.Draw(Globals.Textures["YButton"], new Rectangle(300, 500, 50, 50), Color.White);
+                    Globals.Batch.DrawString(Globals.FontBig, " - Credits", new Vector2(350, 510), Color.White);
                     break;
                 case 1:
                     Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(0, 0, 1920, 1080), Color.DarkRed);
@@ -365,6 +383,15 @@ namespace CatastropheZ
                         inc += 1;
                     }
                     Globals.Batch.Draw(Globals.Textures["Indicator"], new Rectangle(1500, (260 + (80 * menuIndex)), 50, 50), Color.White);
+                    break;
+                case 4:
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(0, 0, 1920, 1080), Color.DarkRed);
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 180, 1320, 300), Color.Red);
+                    Globals.Batch.DrawString(Globals.FontBig, "Daniel Tice - Lead Programmer, UI", new Vector2(350, 190), Color.White);
+                    Globals.Batch.DrawString(Globals.FontBig, "Aaron Wright - SFX Implementation, SFX, Level Design", new Vector2(350, 270), Color.White);
+                    Globals.Batch.DrawString(Globals.FontBig, "Nathan Ledet - Textures", new Vector2(350, 350), Color.White);
+                    Globals.Batch.DrawString(Globals.FontBig, "Press B to go back.", new Vector2(350, 430), Color.White);
                     break;
                 default:
                     break;

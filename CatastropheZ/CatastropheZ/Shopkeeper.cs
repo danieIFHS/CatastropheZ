@@ -116,15 +116,15 @@ namespace CatastropheZ
             {
                 Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1680, 180, 240, 420), Color.White);
 
-                Globals.Batch.DrawString(Globals.FontBig, first.ToString(), new Vector2(1700, 320), Color.Black);
-                Globals.Batch.DrawString(Globals.FontBig, second.ToString(), new Vector2(1700, 380), Color.Black);
-                Globals.Batch.DrawString(Globals.FontBig, third.ToString(), new Vector2(1700, 440), Color.Black);
-                Globals.Batch.DrawString(Globals.FontBig, fourth.ToString(), new Vector2(1700, 500), Color.Black);
-
                 Globals.Batch.DrawString(Globals.Font, data[0], new Vector2(1750, 320), Color.Black);
                 Globals.Batch.DrawString(Globals.Font, data[1], new Vector2(1750, 380), Color.Black);
                 Globals.Batch.DrawString(Globals.Font, data[2], new Vector2(1750, 440), Color.Black);
                 Globals.Batch.DrawString(Globals.Font, data[3], new Vector2(1750, 500), Color.Black);
+
+                Globals.Batch.Draw(Globals.Textures["AButton"], new Rectangle(1680, 310, 50, 50), Color.White);
+                Globals.Batch.Draw(Globals.Textures["XButton"], new Rectangle(1680, 370, 50, 50), Color.White);
+                Globals.Batch.Draw(Globals.Textures["YButton"], new Rectangle(1680, 430, 50, 50), Color.White);
+                Globals.Batch.Draw(Globals.Textures["BButton"], new Rectangle(1680, 490, 50, 50), Color.White);
             }
         }
     }
