@@ -22,6 +22,7 @@ namespace CatastropheZ
 
         GamePadState oldP1;
         int menuState = 0;
+        int menuIndex = 0;
 
         int Timer;
 
@@ -73,7 +74,7 @@ namespace CatastropheZ
             Globals.Textures["Border"] = this.Content.Load<Texture2D>("Border");
             Globals.Font = this.Content.Load<SpriteFont>("Font");
             Globals.FontBig = this.Content.Load<SpriteFont>("Font2");
-            
+
 
             string[] Tiles = Directory.GetFiles("Content\\Sprites\\Tiles");
             for (int i = 0; i < Tiles.Count(); i++)
@@ -105,7 +106,7 @@ namespace CatastropheZ
             for (int i = 0; i < sfxTexts.Count(); i++)
             {
                 string sub = sfxTexts[i].Substring(8, sfxTexts[i].Length - 12);
-               Globals.SFX[sub.Substring(4)] = this.Content.Load<SoundEffect>(sub); 
+                Globals.SFX[sub.Substring(4)] = this.Content.Load<SoundEffect>(sub);
             }
 
             foreach (KeyValuePair<string, SoundEffect> entry in Globals.SFX)
@@ -198,11 +199,29 @@ namespace CatastropheZ
                 {
                     if (menuState == 0)
                     {
-                        Globals.InGame = true;
+                        menuState = 1;
+                    }
+                    else if (menuState == 2)
+                    {
+
                     }
                     else
                     {
 
+                    }
+                }
+                else if (P1State.DPad.Down > 0 && oldP1.DPad.Down <= 0)
+                {
+                    if (menuState == 2)
+                    {
+                        if (menuIndex == Globals.campaignLevels.Count - 1)
+                        {
+                            menuIndex = 0;
+                        }
+                        else
+                        {
+                            menuIndex++;
+                        }
                     }
                 }
             }
@@ -307,10 +326,20 @@ namespace CatastropheZ
                     Globals.Batch.Draw(Globals.Textures["BButton"], new Rectangle(300, 420, 50, 50), Color.White);
                     Globals.Batch.DrawString(Globals.FontBig, " - Level Creator", new Vector2(350, 430), Color.White);
                     break;
-                //case 1:
-                //    int inc = 0;
-                //    for (int i = 0; i < )
-                //    break;
+                case 1:
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(0, 0, 1920, 1080), Color.DarkRed);
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
+
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 180, 1320, 50), Color.Red);
+                    Globals.Batch.DrawString(Globals.FontBig, "Using the D-Pad, select a campaign level!", new Vector2(350, 190), Color.White);
+                    int inc = 0;
+                    foreach (KeyValuePair<string, Level> entry in Globals.campaignLevels)
+                    {
+                        spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 260 + (80 * inc), 1320, 50), Color.Red);
+                        spriteBatch.DrawString(Globals.FontBig, entry.Key.ToString(), new Vector2(300, 270 + (80 * inc)), Color.White);
+                        inc += 1;
+                    }
+                    break;
                 default:
                     break;
             }
