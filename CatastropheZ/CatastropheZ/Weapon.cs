@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+
 
 namespace CatastropheZ
 {
@@ -24,7 +26,9 @@ namespace CatastropheZ
         public int lastUsed;
         public int cooldown;
         public string name;
+        public Song weapSound;
 
+        
         public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot, int _cooldown, string _name)
         {
             attatchedPlayer = _player;
@@ -37,13 +41,18 @@ namespace CatastropheZ
             slot = _slot;
             name = _name;
 
+            
+            
+
             cooldown = _cooldown;
 
             Equipped = true; // Add a check here later to see if the player's active slot is this weapon, if so set equipped to true
         }
-
+        
         public void Fire()
         {
+           
+
             if (Equipped == true)
             {
                 Vector2 tipOffset = new Vector2(20, (-size.Y / 2) + 5);
@@ -52,8 +61,10 @@ namespace CatastropheZ
                 Projectile e = new Projectile(Globals.Textures["Placeholder"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
                     attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
 
+                //MediaPlayer.Play(Globals.SFX["Deagle"]);
                 Globals.Projectiles.Add(e);
             }
+            
         }
         // probably put sound effects in the fire function, just make a big switch case for each name
         public Weapon Clone()

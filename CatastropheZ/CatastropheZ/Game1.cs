@@ -73,6 +73,7 @@ namespace CatastropheZ
             Globals.Textures["Border"] = this.Content.Load<Texture2D>("Border");
             Globals.Font = this.Content.Load<SpriteFont>("Font");
             Globals.FontBig = this.Content.Load<SpriteFont>("Font2");
+            
 
             string[] Tiles = Directory.GetFiles("Content\\Sprites\\Tiles");
             for (int i = 0; i < Tiles.Count(); i++)
