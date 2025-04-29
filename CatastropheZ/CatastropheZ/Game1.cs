@@ -194,6 +194,7 @@ namespace CatastropheZ
                 }
 
             }
+            // Full menu loop
             else if (!Globals.InGame)
             {
                 if (P1State.Buttons.A > 0 && oldP1.Buttons.A <= 0)
