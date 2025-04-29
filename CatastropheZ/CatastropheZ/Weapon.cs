@@ -61,20 +61,25 @@ namespace CatastropheZ
                 Vector2 gunTipPosition = attatchedPlayer.position + rotatedTipOffset;
                 Projectile e = new Projectile(Globals.Textures["Placeholder"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
                     attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
-                if (name.Equals("Blank"))
+                switch (name)
                 {
-                    Globals.SFX["Deagle"].Play();
+                    case "Blank":
+                        Globals.SFX["Deagle"].Play();
+                        break;
+                    case "Default":
+                        Globals.SFX["Bolt"].Play();
+                        break;
+                    case "AK-47":
+                        Globals.SFX["AK"].Play();
+                        break;
+                    default:
+                        break;
                 }
-                if (name.Equals("Default"))
-                {
-                    Globals.SFX["Bolt"].Play();
-                }
-                if (name.Equals("AK-47"))
-                {
-                    Globals.SFX["AK"].Play();
-                }
-                Console.WriteLine(name);
+                
                 Globals.Projectiles.Add(e);
+
+                
+                   
             }
             
         }
