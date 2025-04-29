@@ -61,12 +61,12 @@ namespace CatastropheZ
                 Vector2 gunTipPosition = attatchedPlayer.position + rotatedTipOffset;
                 Projectile e = new Projectile(Globals.Textures["Placeholder"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
                     attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
-
-                Globals.SFX["Deagle"].Play();
-                //if (name.Equals("Sniper"))
-                //{
-                //    Globals.SFX["Sniper"].Play();
-                //}
+                if (name.Equals("Blank"))
+                {
+                    Globals.SFX["Deagle"].Play();
+                }
+                
+               
                 Globals.Projectiles.Add(e);
             }
             
