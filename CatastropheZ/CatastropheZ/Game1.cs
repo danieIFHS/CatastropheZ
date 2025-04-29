@@ -23,6 +23,7 @@ namespace CatastropheZ
         GamePadState oldP1;
         int menuState = 0;
         int menuIndex = 0;
+        List<string> levelMappings = new List<string>();
 
         int Timer;
 
@@ -201,18 +202,25 @@ namespace CatastropheZ
                     {
                         menuState = 1;
                     }
-                    else if (menuState == 2)
+                    else if (menuState == 1)
                     {
-
+                        Console.WriteLine("Starting level");
+                        Console.WriteLine(levelMappings[menuIndex]);
+                        Globals.ActiveLevel = new Level(levelMappings[menuIndex], "Campaign");
+                        Globals.InGame = true;
                     }
                     else
                     {
 
                     }
                 }
-                else if (P1State.DPad.Down > 0 && oldP1.DPad.Down <= 0)
+                if (P1State.Buttons.B > 0 && oldP1.Buttons.B <= 0)
                 {
-                    if (menuState == 2)
+                    menuState = 0;
+                }
+                if (P1State.DPad.Down == ButtonState.Pressed && oldP1.DPad.Down != ButtonState.Pressed)
+                {
+                    if (menuState == 1)
                     {
                         if (menuIndex == Globals.campaignLevels.Count - 1)
                         {
@@ -221,6 +229,20 @@ namespace CatastropheZ
                         else
                         {
                             menuIndex++;
+                        }
+                    }
+                }
+                if (P1State.DPad.Up == ButtonState.Pressed && oldP1.DPad.Up != ButtonState.Pressed)
+                {
+                    if (menuState == 1)
+                    {
+                        if (menuIndex == 0)
+                        {
+                            menuIndex = Globals.campaignLevels.Count - 1;
+                        }
+                        else
+                        {
+                            menuIndex--;
                         }
                     }
                 }
@@ -331,14 +353,17 @@ namespace CatastropheZ
                     Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
 
                     Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 180, 1320, 50), Color.Red);
-                    Globals.Batch.DrawString(Globals.FontBig, "Using the D-Pad, select a campaign level!", new Vector2(350, 190), Color.White);
+                    Globals.Batch.DrawString(Globals.FontBig, "Using the D-Pad, select a campaign level! Press A to play it, or B to go back.", new Vector2(350, 190), Color.White);
+                    levelMappings.Clear();
                     int inc = 0;
                     foreach (KeyValuePair<string, Level> entry in Globals.campaignLevels)
                     {
                         spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 260 + (80 * inc), 1320, 50), Color.Red);
                         spriteBatch.DrawString(Globals.FontBig, entry.Key.ToString(), new Vector2(300, 270 + (80 * inc)), Color.White);
+                        levelMappings.Add(entry.Key);
                         inc += 1;
                     }
+                    Globals.Batch.Draw(Globals.Textures["Indicator"], new Rectangle(1400, (260 + (80 * menuIndex)), 50, 50), Color.White);
                     break;
                 default:
                     break;
