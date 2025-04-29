@@ -61,7 +61,7 @@ namespace CatastropheZ
                 Projectile e = new Projectile(Globals.Textures["Placeholder"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
                     attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
 
-                //MediaPlayer.Play(Globals.SFX["Deagle"]);
+                Globals.SFX["Deagle"].Play(); 
                 Globals.Projectiles.Add(e);
             }
             
