@@ -363,7 +363,7 @@ namespace CatastropheZ
                         levelMappings.Add(entry.Key);
                         inc += 1;
                     }
-                    Globals.Batch.Draw(Globals.Textures["Indicator"], new Rectangle(1400, (260 + (80 * menuIndex)), 50, 50), Color.White);
+                    Globals.Batch.Draw(Globals.Textures["Indicator"], new Rectangle(1500, (260 + (80 * menuIndex)), 50, 50), Color.White);
                     break;
                 default:
                     break;
