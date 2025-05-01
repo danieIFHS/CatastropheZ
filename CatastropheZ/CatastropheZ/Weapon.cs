@@ -56,6 +56,7 @@ namespace CatastropheZ
                 Vector2 tipOffset = new Vector2(20, (-size.Y / 2) + 5);
                 Vector2 rotatedTipOffset = Vector2.Transform(tipOffset, Matrix.CreateRotationZ(attatchedPlayer.Degrees));
                 Vector2 gunTipPosition = attatchedPlayer.position + rotatedTipOffset;
+                
                 Texture2D texture = Globals.Textures["Placeholder"];
                 
                 switch (name)
@@ -68,6 +69,7 @@ namespace CatastropheZ
                     case "Default":
                         Globals.SFX["Bolt"].Play();
                         texture = Globals.Textures["Placeholder"];
+                         
                         Console.WriteLine(name);
                         break;
                     case "AK-47":
