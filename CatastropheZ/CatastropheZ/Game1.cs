@@ -27,6 +27,10 @@ namespace CatastropheZ
 
         int Timer;
 
+        bool makingLevel = false;
+        LevelCreator activeCreator;
+        float moveDelay;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -219,7 +223,8 @@ namespace CatastropheZ
                 {
                     if (menuState == 0)
                     {
-
+                        makingLevel = true;
+                        activeCreator = new LevelCreator();
                     }
                     else
                     {
@@ -262,6 +267,79 @@ namespace CatastropheZ
                     }
                 }
             }
+
+            bool down = false;
+            if (makingLevel)
+            {
+                if (P1State.DPad.Up == ButtonState.Pressed && (oldP1.DPad.Up != ButtonState.Pressed || (moveDelay >= 60)))
+                {
+                    if (activeCreator.activeY == 0)
+                    {
+                        activeCreator.activeY = 53;
+                    }
+                    else
+                    {
+                        activeCreator.activeY -= 1;
+                    }
+                }
+                else if (P1State.DPad.Down == ButtonState.Pressed && (oldP1.DPad.Down != ButtonState.Pressed || (moveDelay >= 60)))
+                {
+                    if (activeCreator.activeY == 53)
+                    {
+                        activeCreator.activeY = 0;
+                    }
+                    else
+                    {
+                        activeCreator.activeY += 1;
+                    }
+                }
+                else if (P1State.DPad.Left == ButtonState.Pressed && (oldP1.DPad.Left != ButtonState.Pressed || (moveDelay >= 60)))
+                {
+                    if (activeCreator.activeX == 0)
+                    {
+                        activeCreator.activeX = 83;
+                    }
+                    else
+                    {
+                        activeCreator.activeX -= 1;
+                    }
+                }
+                else if (P1State.DPad.Right == ButtonState.Pressed && (oldP1.DPad.Right != ButtonState.Pressed || (moveDelay >= 60)))
+                {
+                    if (activeCreator.activeX == 83)
+                    {
+                        activeCreator.activeX = 0;
+                    }
+                    else
+                    {
+                        activeCreator.activeX += 1;
+                    }
+                }
+            }
+            if (P1State.DPad.Up == ButtonState.Pressed) { down = true; }
+            if (P1State.DPad.Down == ButtonState.Pressed) { down = true; }
+            if (P1State.DPad.Left == ButtonState.Pressed) { down = true; }
+            if (P1State.DPad.Right == ButtonState.Pressed) { down = true; }
+            if (P1State.DPad.Up == ButtonState.Released && oldP1.DPad.Up == ButtonState.Pressed)
+            {
+                moveDelay = 0;
+            }
+            if (P1State.DPad.Down == ButtonState.Released && oldP1.DPad.Down == ButtonState.Pressed)
+            {
+                moveDelay = 0;
+            }
+            if (P1State.DPad.Left == ButtonState.Released && oldP1.DPad.Left == ButtonState.Pressed)
+            {
+                moveDelay = 0;
+            }
+            if (P1State.DPad.Right == ButtonState.Released && oldP1.DPad.Right == ButtonState.Pressed)
+            {
+                moveDelay = 0;
+            }
+            if (down)
+            {
+                moveDelay++;
+            }
             oldP1 = P1State;
             Timer++;
             base.Update(gameTime);
@@ -282,6 +360,10 @@ namespace CatastropheZ
             if (Globals.InGame)
             {
                 drawMainGame();
+            }
+            else if (makingLevel)
+            {
+                activeCreator.Draw();
             }
             else
             {

@@ -42,9 +42,6 @@ namespace CatastropheZ
             slot = _slot;
             name = _name;
 
-            
-            
-
             cooldown = _cooldown;
 
             Equipped = true; // Add a check here later to see if the player's active slot is this weapon, if so set equipped to true
