@@ -74,8 +74,10 @@ namespace CatastropheZ
                         break;
                     default:
                         break;
+                        // Music gun can play mulitple, randomly decided sounds
+                        // https://www.youtube.com/watch?v=nhJgJ-tRivg
                 }
-                
+
                 Globals.Projectiles.Add(e);
 
                 
