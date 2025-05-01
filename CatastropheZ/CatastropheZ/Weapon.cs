@@ -49,32 +49,39 @@ namespace CatastropheZ
         
         public void Fire()
         {
-           
+
 
             if (Equipped == true)
             {
                 Vector2 tipOffset = new Vector2(20, (-size.Y / 2) + 5);
                 Vector2 rotatedTipOffset = Vector2.Transform(tipOffset, Matrix.CreateRotationZ(attatchedPlayer.Degrees));
                 Vector2 gunTipPosition = attatchedPlayer.position + rotatedTipOffset;
-                Projectile e = new Projectile(Globals.Textures["Bullet"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
-                    attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
+                Texture2D texture = Globals.Textures["Placeholder"];
+                
                 switch (name)
                 {
                     case "Blank":
                         Globals.SFX["Deagle"].Play();
+                        texture = Globals.Textures["Bullet"];
+                        Console.WriteLine(name);
                         break;
                     case "Default":
                         Globals.SFX["Bolt"].Play();
+                        texture = Globals.Textures["Placeholder"];
+                        Console.WriteLine(name);
                         break;
                     case "AK-47":
                         Globals.SFX["AK"].Play();
+                        texture = Globals.Textures["Placeholder"];
+                        Console.WriteLine(name);
                         break;
                     default:
                         break;
                         // Music gun can play mulitple, randomly decided sounds
                         // https://www.youtube.com/watch?v=nhJgJ-tRivg
                 }
-
+                Projectile e = new Projectile(texture, new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
+                    attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
                 Globals.Projectiles.Add(e);
 
                 
