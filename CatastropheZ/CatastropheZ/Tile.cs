@@ -19,6 +19,7 @@ namespace CatastropheZ
         public Rectangle Rect;
         public Color color;
         public float transparency;
+        public char character;
 
         public Tile()
         {

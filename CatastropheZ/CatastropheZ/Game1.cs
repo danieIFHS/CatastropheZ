@@ -227,6 +227,11 @@ namespace CatastropheZ
                     {
                         makingLevel = true;
                         activeCreator = new LevelCreator();
+                        menuState = 3;
+                    }
+                    else if (menuState == 3)
+                    {
+
                     }
                     else
                     {
@@ -273,6 +278,22 @@ namespace CatastropheZ
             bool down = false;
             if (makingLevel)
             {
+                if (P1State.Buttons.A > 0)
+                {
+                    activeCreator.Update('A');
+                }
+                if (P1State.Buttons.B > 0)
+                {
+                    activeCreator.Update('B');
+                }
+                if (P1State.Buttons.X > 0)
+                {
+                    activeCreator.Update('X');
+                }
+                if (P1State.Buttons.Y > 0)
+                {
+                    activeCreator.Update('Y');
+                }
                 if (P1State.DPad.Up == ButtonState.Pressed && (oldP1.DPad.Up != ButtonState.Pressed || (moveDelay >= 60)))
                 {
                     if (activeCreator.activeY == 0)
@@ -342,6 +363,7 @@ namespace CatastropheZ
             {
                 moveDelay++;
             }
+
             oldP1 = P1State;
             Timer++;
             base.Update(gameTime);

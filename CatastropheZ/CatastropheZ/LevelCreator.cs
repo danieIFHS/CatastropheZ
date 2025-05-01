@@ -32,9 +32,46 @@ namespace CatastropheZ
                     e.CollisionType = 1;
                     e.Rect = new Rectangle(i * 20, j * 20, 20, 20);
                     e.color = Color.DarkGray;
+                    e.character = '.';
 
                     Grid[i, j] = e;
                 }
+            }
+        }
+
+        public void Update(char Button)
+        {
+            switch (Button)
+            {
+                case 'A':
+                    Grid[activeX, activeY].Texture = Globals.Textures["Stone"];
+                    Grid[activeX, activeY].character = 'W';
+                    break;
+                case 'B':
+                    Grid[activeX, activeY].Texture = Globals.Textures["Grass"];
+                    Grid[activeX, activeY].character = '.';
+                    break;
+                case 'X':
+                    Grid[activeX, activeY].Texture = Globals.Textures["Floor"];
+                    Grid[activeX, activeY].character = 'F';
+                    break;
+                case 'Y':
+                    for (int i = 0; i < Globals.ActiveLevel.TileData.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < Globals.ActiveLevel.TileData.GetLength(1); j++)
+                        {
+                            if (Grid[i, j].character == 'C')
+                            {
+                                Grid[i, j].Texture = Globals.Textures["Grass"];
+                                Grid[i, j].character = '.';
+                            }
+                        }
+                    }
+                    Grid[activeX, activeY].Texture = Globals.Textures["Cure"];
+                    Grid[activeX, activeY].character = 'C';
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -49,7 +86,20 @@ namespace CatastropheZ
             }
             Globals.Batch.Draw(Globals.Textures["Border"], new Rectangle(activeX * 20, activeY * 20, 20, 20), Color.White);
 
-            
+            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1680, 0, 240, 1080), Color.DimGray);
+
+            Globals.Batch.Draw(Globals.Textures["AButton"], new Rectangle(1680, 40, 50, 50), Color.White);
+            Globals.Batch.DrawString(Globals.FontBig, "Place Wall", new Vector2(1750, 50), Color.White);
+
+            Globals.Batch.Draw(Globals.Textures["BButton"], new Rectangle(1680, 110, 50, 50), Color.White);
+            Globals.Batch.DrawString(Globals.FontBig, "Place Grass", new Vector2(1750, 120), Color.White);
+
+            Globals.Batch.Draw(Globals.Textures["XButton"], new Rectangle(1680, 180, 50, 50), Color.White);
+            Globals.Batch.DrawString(Globals.FontBig, "Place Floor", new Vector2(1750, 190), Color.White);
+
+            Globals.Batch.Draw(Globals.Textures["YButton"], new Rectangle(1680, 250, 50, 50), Color.White);
+            Globals.Batch.DrawString(Globals.FontBig, "Place Cure", new Vector2(1750, 260), Color.White);
+
         }
     }
 }
