@@ -56,7 +56,7 @@ namespace CatastropheZ
                 Vector2 tipOffset = new Vector2(20, (-size.Y / 2) + 5);
                 Vector2 rotatedTipOffset = Vector2.Transform(tipOffset, Matrix.CreateRotationZ(attatchedPlayer.Degrees));
                 Vector2 gunTipPosition = attatchedPlayer.position + rotatedTipOffset;
-                Projectile e = new Projectile(Globals.Textures["Placeholder"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
+                Projectile e = new Projectile(Globals.Textures["Bullet"], new Rectangle((int)gunTipPosition.X, (int)gunTipPosition.Y, 10, 10),
                     attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
                 switch (name)
                 {
