@@ -37,6 +37,12 @@ namespace CatastropheZ
                     Grid[i, j] = e;
                 }
             }
+
+            string path;
+            path = @"%AppData%\stuff";
+
+            path = Environment.ExpandEnvironmentVariables(path);
+            Console.WriteLine(path);
         }
 
         public void Update(char Button)
@@ -73,6 +79,11 @@ namespace CatastropheZ
                 default:
                     break;
             }
+        }
+
+        public void Save()
+        {
+            
         }
 
         public void Draw()
