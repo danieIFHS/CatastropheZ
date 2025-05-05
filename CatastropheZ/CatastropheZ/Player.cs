@@ -151,16 +151,17 @@ namespace CatastropheZ
                     
                 }
 
-                if (padState.Triggers.Right == 0)
+                if (rumbleLeft != 0)
                 {
                     GamePad.SetVibration(PlayerIndex.One, 0, 0);
+                    rumbleLeft--;
                 }
                 else
                 {
                     GamePad.SetVibration(PlayerIndex.One, 1, 1);
                 }
 
-                
+
 
                 if (padState.Buttons.RightShoulder > 0 && oldPadState.Buttons.RightShoulder == 0)
                 {
