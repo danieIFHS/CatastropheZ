@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.IO;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -86,20 +87,49 @@ namespace CatastropheZ
 
         public void Save()
         {
-            saving = true;
-            string path;
-            path = @"%AppData%\CatastropheZ";
+            //saving = true;
+            var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var path = Path.Combine(appDataPath, @"CatastropheZ\");
 
-            string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string specificFolder = Path.Combine(folder, "CatastropheZ");
-            Directory.CreateDirectory(specificFolder);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            DateTime date = DateTime.UtcNow;
+            string fileName = date.ToString("yyyy_MM_dd_HH_mm_ss") + ".txt";
+            string folderPath = Path.Combine(appDataPath, "CatastropheZ");
+            path = Path.Combine(folderPath, fileName);
+            try
+            {
+                FileStream fs = File.Create(path);
+                fs.Close();
+                string[] lines = File.ReadAllLines(path);
+                using (StreamWriter sw = new StreamWriter(path))
+                {
+                    for (int x = 0; x < Globals.ActiveLevel.TileData.GetLength(1); x++)
+                    {
+                        string stack = "";
+                        for (int y = 0; y < Globals.ActiveLevel.TileData.GetLength(0); y++)
+                        {
+                            stack += Grid[y, x].character; 
+                        }
+                        Console.WriteLine(stack);
+                        sw.WriteLine(stack);
+                    }
+                }
 
-            path = Environment.ExpandEnvironmentVariables(path);
-            Console.WriteLine(path);
+                //using (StreamReader sr = File.OpenText(path))
+                //{
+                //    string s = "";
+                //    while ((s = sr.ReadLine()) != null)
+                //    {
+                //        Console.WriteLine(s);
+                //    }
+                //}
+            }
 
-            //string file = @"C:\program files\myapp\file.txt";
-            
-            //File.Copy(file, Path.Combine(specificFolder, Path.GetFileName(file)));
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         public void Draw()
