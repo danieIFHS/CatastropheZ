@@ -138,13 +138,30 @@ namespace CatastropheZ
                         {
                             case "Gun":
                                 activeWeapon.Fire();
+                                GamePad.SetVibration(PlayerIndex.One, 1, 1);
                                 break;
 
                             default:
                                 break;
                         }
+
+                        
+                    
                     }
+
+                    
                 }
+
+                if (padState.Triggers.Right == 0)
+                {
+                    GamePad.SetVibration(PlayerIndex.One, 0, 0);
+                }
+                else
+                {
+                    GamePad.SetVibration(PlayerIndex.One, 1, 1);
+                }
+
+                
 
                 if (padState.Buttons.RightShoulder > 0 && oldPadState.Buttons.RightShoulder == 0)
                 {

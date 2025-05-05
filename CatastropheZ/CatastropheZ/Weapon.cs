@@ -64,17 +64,19 @@ namespace CatastropheZ
                     case "Blank":
                         Globals.SFX["Deagle"].Play();
                         texture = Globals.Textures["Bullet"];
+                        
                         Console.WriteLine(name);
                         break;
                     case "Default":
                         Globals.SFX["Bolt"].Play();
                         texture = Globals.Textures["Placeholder"];
-                         
+                        
                         Console.WriteLine(name);
                         break;
                     case "AK-47":
                         Globals.SFX["AK"].Play();
                         texture = Globals.Textures["Placeholder"];
+                        
                         Console.WriteLine(name);
                         break;
                     default:
