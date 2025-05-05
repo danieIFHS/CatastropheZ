@@ -34,6 +34,7 @@ namespace CatastropheZ
         public List<Weapon> Weapons;
         public Weapon activeWeapon;
         public int wepIndex;
+        public float rumbleLeft;
 
         public bool inShop = false;
 
@@ -53,7 +54,7 @@ namespace CatastropheZ
                 -350,
                 1,
                 10,
-                "Blank");
+                "Blank", 15);
             e.cooldown = 50;
             e.lastUsed = -5000;
             Weapons.Add(e);
@@ -69,7 +70,7 @@ namespace CatastropheZ
                 -350,
                 1,
                 1,
-                "Blank");
+                "Blank", 15);
             b.cooldown = 1;
             b.lastUsed = -5000;
             Weapons.Add(b);
@@ -138,30 +139,25 @@ namespace CatastropheZ
                         {
                             case "Gun":
                                 activeWeapon.Fire();
-                                GamePad.SetVibration(PlayerIndex.One, 1, 1);
+                                rumbleLeft = activeWeapon.rumble;
                                 break;
 
                             default:
                                 break;
                         }
 
-                        
-                    
                     }
-
-                    
                 }
 
-                if (padState.Triggers.Right == 0)
+                if (rumbleLeft != 0)
                 {
-                    GamePad.SetVibration(PlayerIndex.One, 0, 0);
+                    GamePad.SetVibration(PlayerIndex.One, 1, 1);
+                    rumbleLeft--;
                 }
                 else
                 {
-                    GamePad.SetVibration(PlayerIndex.One, 1, 1);
+                    GamePad.SetVibration(PlayerIndex.One, 0, 0);
                 }
-
-                
 
                 if (padState.Buttons.RightShoulder > 0 && oldPadState.Buttons.RightShoulder == 0)
                 {

@@ -37,19 +37,19 @@ namespace CatastropheZ
         public Shopkeeper()
         {
             data = new string[4];
-            Weapons[0] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 100), Globals.Textures["Placeholder"], -350, 1, 1, "Blank");
-            Weapons[1] = new Weapon(null, Globals.Textures["Sniper"], "Gun", new Vector2(10, 150), Globals.Textures["Placeholder"], -350, 1, 20, "Sniper");
-            Weapons[2] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 200), Globals.Textures["Placeholder"], -350, 1, 100, "AK-47");
-            Weapons[3] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 250), Globals.Textures["Placeholder"], -350, 1, 200, "Deagle");
-            Weapons[4] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
-            Weapons[5] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
-            Weapons[6] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
-            Weapons[7] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
-            Weapons[8] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
-            Weapons[9] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
-            Weapons[10] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
-            Weapons[11] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
-            Weapons[12] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default");
+            Weapons[0] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 100), Globals.Textures["Placeholder"], -350, 1, 1, "Blank", 1);
+            Weapons[1] = new Weapon(null, Globals.Textures["Sniper"], "Gun", new Vector2(10, 150), Globals.Textures["Placeholder"], -350, 1, 20, "Sniper", 40);
+            Weapons[2] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 200), Globals.Textures["Placeholder"], -350, 1, 100, "AK-47", 10);
+            Weapons[3] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 250), Globals.Textures["Placeholder"], -350, 1, 200, "Deagle", 30);
+            Weapons[4] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
+            Weapons[5] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
+            Weapons[6] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
+            Weapons[7] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
+            Weapons[8] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
+            Weapons[9] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
+            Weapons[10] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
+            Weapons[11] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
+            Weapons[12] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
 
         }
         public void Refresh()

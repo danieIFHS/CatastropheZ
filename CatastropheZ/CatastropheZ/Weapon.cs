@@ -27,10 +27,9 @@ namespace CatastropheZ
         public int cooldown;
         public string name;
         public int x;
-        
+        public float rumble;
 
-        
-        public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot, int _cooldown, string _name)
+        public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot, int _cooldown, string _name, float _rumble)
         {
             attatchedPlayer = _player;
             texture = _texture;
@@ -41,6 +40,7 @@ namespace CatastropheZ
             offset = _offset;
             slot = _slot;
             name = _name;
+            rumble = _rumble;
 
             cooldown = _cooldown;
 
