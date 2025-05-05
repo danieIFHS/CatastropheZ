@@ -77,6 +77,7 @@ namespace CatastropheZ
             Globals.Textures["Placeholder"] = this.Content.Load<Texture2D>("images");
             Globals.Textures["Bullet"] = this.Content.Load<Texture2D>("Bullet");
             Globals.Textures["Sniper"] = this.Content.Load<Texture2D>("Sniper");
+            Globals.Textures["DJGun"] = this.Content.Load<Texture2D>("DJGun");
             Globals.Textures["Cat1"] = this.Content.Load<Texture2D>("Cat");
             Globals.Textures["Border"] = this.Content.Load<Texture2D>("Border");
             Globals.Font = this.Content.Load<SpriteFont>("Font");
