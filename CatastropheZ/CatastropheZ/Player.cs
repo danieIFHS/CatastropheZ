@@ -153,12 +153,12 @@ namespace CatastropheZ
 
                 if (rumbleLeft != 0)
                 {
-                    GamePad.SetVibration(PlayerIndex.One, 0, 0);
+                    GamePad.SetVibration(PlayerIndex.One, 1, 1);
                     rumbleLeft--;
                 }
                 else
                 {
-                    GamePad.SetVibration(PlayerIndex.One, 1, 1);
+                    GamePad.SetVibration(PlayerIndex.One, 0, 0);
                 }
 
 
