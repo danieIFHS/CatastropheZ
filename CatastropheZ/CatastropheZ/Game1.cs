@@ -294,6 +294,10 @@ namespace CatastropheZ
                 {
                     activeCreator.Update('Y');
                 }
+                if (P1State.Buttons.Start > 0)
+                {
+                    activeCreator.Update('S');
+                }
                 if (P1State.DPad.Up == ButtonState.Pressed && (oldP1.DPad.Up != ButtonState.Pressed || (moveDelay >= 60)))
                 {
                     if (activeCreator.activeY == 0)

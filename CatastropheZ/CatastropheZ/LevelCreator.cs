@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,7 @@ namespace CatastropheZ
         public Tile[,] Grid;
         public int activeX;
         public int activeY;
+        public bool saving = false;
 
         public LevelCreator()
         {
@@ -38,11 +40,6 @@ namespace CatastropheZ
                 }
             }
 
-            string path;
-            path = @"%AppData%\stuff";
-
-            path = Environment.ExpandEnvironmentVariables(path);
-            Console.WriteLine(path);
         }
 
         public void Update(char Button)
@@ -76,6 +73,12 @@ namespace CatastropheZ
                     Grid[activeX, activeY].Texture = Globals.Textures["Cure"];
                     Grid[activeX, activeY].character = 'C';
                     break;
+                case 'S':
+                    if (!saving)
+                    {
+                        Save();
+                    }
+                    break;
                 default:
                     break;
             }
@@ -83,7 +86,20 @@ namespace CatastropheZ
 
         public void Save()
         {
+            saving = true;
+            string path;
+            path = @"%AppData%\CatastropheZ";
+
+            string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string specificFolder = Path.Combine(folder, "CatastropheZ");
+            Directory.CreateDirectory(specificFolder);
+
+            path = Environment.ExpandEnvironmentVariables(path);
+            Console.WriteLine(path);
+
+            //string file = @"C:\program files\myapp\file.txt";
             
+            //File.Copy(file, Path.Combine(specificFolder, Path.GetFileName(file)));
         }
 
         public void Draw()
