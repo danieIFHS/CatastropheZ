@@ -155,9 +155,7 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Levels\Custom\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="SFX\AK.wav">
       <Name>AK</Name>

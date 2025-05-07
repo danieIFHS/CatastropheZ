@@ -114,6 +114,7 @@ namespace CatastropheZ
                         Console.WriteLine(stack);
                         sw.WriteLine(stack);
                     }
+                    sw.WriteLine("10,200,10,75");
                 }
 
                 //using (StreamReader sr = File.OpenText(path))

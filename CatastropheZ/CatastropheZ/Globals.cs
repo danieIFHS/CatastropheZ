@@ -24,5 +24,6 @@ namespace CatastropheZ
         public static SpriteFont Font;
         public static SpriteFont FontBig;
         public static Dictionary<string, Level> campaignLevels;
+        public static Dictionary<string, Level> customLevels;
     }
 }

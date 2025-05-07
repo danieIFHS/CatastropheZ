@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
+
 namespace CatastropheZ
 {
     public class Level
@@ -18,7 +19,7 @@ namespace CatastropheZ
         public Tile[,] PathfindingData;
         public List<Zombie> Zombies;
         public string LevelName;
-        public string Path;
+        public string PathStr;
         public float cureHP;
         public int waves;
         public int currentWave;
@@ -36,7 +37,7 @@ namespace CatastropheZ
 
         public Level(string levelname, string path)
         {
-            Path = path;
+            PathStr = path;
             LevelName = levelname;
             TileData = new Tile[84,54];
             PathfindingData = new Tile[42, 27];
@@ -52,7 +53,18 @@ namespace CatastropheZ
 
         private void Read()
         {
-            StreamReader Reader = new StreamReader(@"Content\Levels\" + Path + @"\" + LevelName + ".txt");
+            StreamReader Reader;
+            if (PathStr == "Custom")
+            {
+                var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var path = Path.Combine(appDataPath, @"CatastropheZ\");
+                Reader = new StreamReader(@"" + path + LevelName + ".txt");
+            }
+            else
+            {
+                Reader = new StreamReader(@"Content\Levels\" + PathStr + @"\" + LevelName + ".txt");
+            }
+
             try
             {
                 using (Reader)
@@ -123,9 +135,9 @@ namespace CatastropheZ
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
                     _tile.color = Color.White;
                     break;
-                case 'S': // Shopkeeper
+                case 'F': // Shopkeeper
                     _tile.CollisionType = 1;
-                    _tile.Texture = Globals.Textures["Cat1"];
+                    _tile.Texture = Globals.Textures["Floor"];
                     _tile.Rect = new Rectangle(_x * 20, _y * 20, 20, 20);
                     _tile.color = Color.White;
                     break;

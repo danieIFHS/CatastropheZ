@@ -24,6 +24,7 @@ namespace CatastropheZ
         int menuState = 0;
         int menuIndex = 0;
         List<string> levelMappings = new List<string>();
+        List<string> customLevels = new List<string>();
 
         int Timer;
 
@@ -53,6 +54,7 @@ namespace CatastropheZ
             Globals.Textures = new Dictionary<string, Texture2D>();
             Globals.SFX = new Dictionary<string, SoundEffect>();
             Globals.campaignLevels = new Dictionary<string, Level>();
+            Globals.customLevels = new Dictionary<string, Level>();
             Globals.Batch = spriteBatch;
             Globals.Projectiles = new List<Projectile>();
             Globals.gameTime = null;
@@ -173,6 +175,28 @@ namespace CatastropheZ
             Globals.gameTime = gameTime;
             GamePadState P1State = GamePad.GetState(PlayerIndex.One);
 
+            var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var path = Path.Combine(appDataPath, @"CatastropheZ\");
+
+
+            foreach (string file in Directory.EnumerateFiles(path, "*.txt"))
+            {
+                string contents = File.ReadAllText(file);
+                if (!customLevels.Contains(contents))
+                {
+                    customLevels.Add(contents);
+                }
+
+                string fileName = Path.GetFileNameWithoutExtension(file);
+
+                if (!Globals.customLevels.ContainsKey(fileName))
+                {
+                    Level e = new Level(fileName, "Custom");
+                    Globals.customLevels.Add(fileName, e);
+                }
+            }
+
+
             if (Globals.InGame && !Globals.ActiveLevel.isBeaten)
             {
                 Globals.ActiveLevel.Update();
@@ -217,6 +241,12 @@ namespace CatastropheZ
                         Globals.ActiveLevel = new Level(levelMappings[menuIndex], "Campaign");
                         Globals.InGame = true;
                     }
+                    else if (menuState == 2)
+                    {
+                        Console.WriteLine("Starting level");
+                        Globals.ActiveLevel = new Level(levelMappings[menuIndex], "Custom");
+                        Globals.InGame = true;
+                    }
                     else
                     {
 
@@ -239,6 +269,13 @@ namespace CatastropheZ
                         menuState = 0;
                     }
                 }
+                if (P1State.Buttons.X > 0 && oldP1.Buttons.X <= 0)
+                {
+                    if (menuState == 0)
+                    {
+                        menuState = 2;
+                    }
+                }
                 if (P1State.Buttons.Y > 0 && oldP1.Buttons.Y <= 0)
                 {
                     if (menuState == 0)
@@ -246,11 +283,39 @@ namespace CatastropheZ
                         menuState = 4;
                     }
                 }
+                if (P1State.Buttons.Back > 0 && oldP1.Buttons.Back > 0)
+                {
+                    if (menuState == 3)
+                    {
+                        menuState = 0;
+                        makingLevel = false;
+                    }
+                }
+                if (P1State.Buttons.Start > 0 && oldP1.Buttons.Start > 0)
+                {
+                    if (menuState == 3)
+                    {
+                        menuState = 0;
+                        makingLevel = false;
+                    }
+                }
+
                 if (P1State.DPad.Down == ButtonState.Pressed && oldP1.DPad.Down != ButtonState.Pressed)
                 {
                     if (menuState == 1)
                     {
                         if (menuIndex == Globals.campaignLevels.Count - 1)
+                        {
+                            menuIndex = 0;
+                        }
+                        else
+                        {
+                            menuIndex++;
+                        }
+                    }
+                    else if (menuState == 2)
+                    {
+                        if (menuIndex == Globals.customLevels.Count - 1)
                         {
                             menuIndex = 0;
                         }
@@ -267,6 +332,17 @@ namespace CatastropheZ
                         if (menuIndex == 0)
                         {
                             menuIndex = Globals.campaignLevels.Count - 1;
+                        }
+                        else
+                        {
+                            menuIndex--;
+                        }
+                    }
+                    else if (menuState == 2)
+                    {
+                        if (menuIndex == 0)
+                        {
+                            menuIndex = Globals.customLevels.Count - 1;
                         }
                         else
                         {
@@ -492,6 +568,23 @@ namespace CatastropheZ
                         spriteBatch.DrawString(Globals.FontBig, entry.Key.ToString(), new Vector2(300, 270 + (80 * inc)), Color.White);
                         levelMappings.Add(entry.Key);
                         inc += 1;
+                    }
+                    Globals.Batch.Draw(Globals.Textures["Indicator"], new Rectangle(1500, (260 + (80 * menuIndex)), 50, 50), Color.White);
+                    break;
+                case 2:
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(0, 0, 1920, 1080), Color.DarkRed);
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(260, 140, 1400, 800), Color.White);
+
+                    Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 180, 1320, 50), Color.Red);
+                    Globals.Batch.DrawString(Globals.FontBig, "Using the D-Pad, select a custom level! Press A to play it, or B to go back.", new Vector2(350, 190), Color.White);
+                    levelMappings.Clear();
+                    int inc2 = 0;
+                    foreach (KeyValuePair<string, Level> entry in Globals.customLevels)
+                    {
+                        spriteBatch.Draw(Globals.Textures["Placeholder"], new Rectangle(300, 260 + (80 * inc2), 1320, 50), Color.Red);
+                        spriteBatch.DrawString(Globals.FontBig, entry.Key.ToString(), new Vector2(300, 270 + (80 * inc2)), Color.White);
+                        levelMappings.Add(entry.Key);
+                        inc2 += 1;
                     }
                     Globals.Batch.Draw(Globals.Textures["Indicator"], new Rectangle(1500, (260 + (80 * menuIndex)), 50, 50), Color.White);
                     break;
