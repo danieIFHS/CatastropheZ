@@ -161,8 +161,6 @@ namespace CatastropheZ
                     GamePad.SetVibration(PlayerIndex.One, 0, 0);
                 }
 
-
-
                 if (padState.Buttons.RightShoulder > 0 && oldPadState.Buttons.RightShoulder == 0)
                 {
                     if (wepIndex == Weapons.Count - 1)
@@ -262,6 +260,7 @@ namespace CatastropheZ
                     Weapons[0].lastUsed = -5000;
                     Weapons[0].attatchedPlayer = this;
                     activeWeapon = Weapons[0];
+                    wepIndex = 0;
                 }
                 else
                 {
@@ -269,6 +268,7 @@ namespace CatastropheZ
                     Weapons[1].lastUsed = -5000;
                     Weapons[1].attatchedPlayer = this;
                     activeWeapon = Weapons[1];
+                    wepIndex = 1;
                 }
             }
             else

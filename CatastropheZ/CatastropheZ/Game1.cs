@@ -233,6 +233,7 @@ namespace CatastropheZ
                     if (menuState == 0)
                     {
                         menuState = 1;
+                        menuIndex = 0;
                     }
                     else if (menuState == 1)
                     {
@@ -274,6 +275,7 @@ namespace CatastropheZ
                     if (menuState == 0)
                     {
                         menuState = 2;
+                        menuIndex = 0;
                     }
                 }
                 if (P1State.Buttons.Y > 0 && oldP1.Buttons.Y <= 0)
