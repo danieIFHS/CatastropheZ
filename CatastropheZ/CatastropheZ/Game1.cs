@@ -168,7 +168,7 @@ namespace CatastropheZ
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.BigButton > 0)
                 this.Exit();
 
             // TODO: Add your update logic here
@@ -285,7 +285,7 @@ namespace CatastropheZ
                         menuState = 4;
                     }
                 }
-                if (P1State.Buttons.Back > 0 && oldP1.Buttons.Back > 0)
+                if (P1State.Buttons.Back == ButtonState.Pressed && oldP1.Buttons.Back == ButtonState.Pressed)
                 {
                     if (menuState == 3)
                     {
