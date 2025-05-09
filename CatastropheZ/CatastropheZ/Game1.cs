@@ -219,6 +219,10 @@ namespace CatastropheZ
             }
             else if (Globals.ActiveLevel.isBeaten)
             {
+                foreach (Player player in Globals.Players)
+                {
+                    player.rumbleLeft = 0;
+                }
                 foreach (Projectile proj in Globals.Projectiles.ToList())
                 {
                     proj.Update();
