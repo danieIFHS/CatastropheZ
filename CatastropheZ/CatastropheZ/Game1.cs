@@ -178,6 +178,8 @@ namespace CatastropheZ
             var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var path = Path.Combine(appDataPath, @"CatastropheZ\");
 
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
 
             foreach (string file in Directory.EnumerateFiles(path, "*.txt"))
             {
