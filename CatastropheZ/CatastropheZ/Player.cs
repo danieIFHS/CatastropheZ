@@ -47,15 +47,15 @@ namespace CatastropheZ
             Weapons = new List<Weapon>();
             Weapon e = new Weapon( //Default primary
                 this,
-                Globals.Textures["Placeholder"],
+                Globals.Textures["Pistol"],
                 "Gun",
-                new Vector2(10, 50),
+                new Vector2(6, 25),
                 Globals.Textures["Placeholder"],
-                -350,
+                -8,
                 1,
-                10,
-                "Blank", 15);
-            e.cooldown = 50;
+                1,
+                "Blank", 15, 5);
+            e.cooldown = 250;
             e.lastUsed = -5000;
             Weapons.Add(e);
             activeWeapon = Weapons[0];
@@ -63,15 +63,15 @@ namespace CatastropheZ
 
             Weapon b = new Weapon( //Default secondary
                 this,
-                Globals.Textures["Placeholder"],
+                Globals.Textures["Pistol"],
                 "Gun",
-                new Vector2(10, 80),
+                new Vector2(6, 25),
                 Globals.Textures["Placeholder"],
-                -350,
+                -8,
                 1,
                 1,
-                "Blank", 15);
-            b.cooldown = 1;
+                "Blank", 15, 5);
+            b.cooldown = 250;
             b.lastUsed = -5000;
             Weapons.Add(b);
 
@@ -254,7 +254,7 @@ namespace CatastropheZ
             {
                 Console.WriteLine("Bought");
                 ZCoins -= price;
-                if (index < 3)
+                if (index2 <= 5)
                 {
                     Weapons[0] = Globals.ActiveLevel.shopkeeper.Weapons[index2].Clone();
                     Weapons[0].lastUsed = -5000;
@@ -262,13 +262,17 @@ namespace CatastropheZ
                     activeWeapon = Weapons[0];
                     wepIndex = 0;
                 }
-                else
+                else if (index2 <= 11)
                 {
                     Weapons[1] = Globals.ActiveLevel.shopkeeper.Weapons[index2].Clone();
                     Weapons[1].lastUsed = -5000;
                     Weapons[1].attatchedPlayer = this;
                     activeWeapon = Weapons[1];
                     wepIndex = 1;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid weapon index — not assignable to a slot.");
                 }
             }
             else
@@ -342,7 +346,7 @@ namespace CatastropheZ
                 activeWeapon.texture,
                 new Rectangle(Rect.X, Rect.Y, (int)activeWeapon.size.X, (int)activeWeapon.size.Y),
                 new Rectangle(0, 0, activeWeapon.texture.Width, activeWeapon.texture.Height),
-                Color.Red,
+                Color.White,
                 Degrees,//-350
                 new Vector2(activeWeapon.offset, activeWeapon.texture.Height / 2),
                 SpriteEffects.None,

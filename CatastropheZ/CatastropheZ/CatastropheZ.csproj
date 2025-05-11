@@ -15,8 +15,8 @@
     <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>8e7d7521-0a41-4213-9b64-33296f5c2d22</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
-    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <ApplicationIcon>Z logo-2.png.ico</ApplicationIcon>
+    <Thumbnail>Z logo-2.png.png</Thumbnail>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -75,6 +75,8 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
+    <Content Include="Z logo-2.png.ico" />
+    <Content Include="Z logo-2.png.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatastropheZContent\CatastropheZContent.contentproj">

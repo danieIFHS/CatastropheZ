@@ -17,115 +17,88 @@ namespace CatastropheZ
         public bool draw;
         public Tile tile;
 
-        public int first;
-        public int second;
-        public int third;
-        public int fourth;
-
-        public int fPrice;
-        public int sPrice;
-        public int tPrice;
-        public int foPrice;
-
+        public int first, second, third, fourth;
+        public int fPrice, sPrice, tPrice, foPrice;
         public string[] data;
 
-        public List<Weapon> Weapons = new List<Weapon>()
-        {
-            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
-        };
+        public List<Weapon> Weapons = new List<Weapon>();
+        private Weapon[] selectedWeapons = new Weapon[4];
 
         public Shopkeeper()
         {
             data = new string[4];
-            Weapons[0] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 100), Globals.Textures["Placeholder"], -350, 1, 1, "Blank", 1);
-            Weapons[1] = new Weapon(null, Globals.Textures["Sniper"], "Gun", new Vector2(10, 150), Globals.Textures["Placeholder"], -350, 1, 20, "Sniper", 40);
-            Weapons[2] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 200), Globals.Textures["Placeholder"], -350, 1, 100, "AK-47", 10);
-            Weapons[3] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 250), Globals.Textures["Placeholder"], -350, 1, 200, "Deagle", 30);
-            Weapons[4] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
-            Weapons[5] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
-            Weapons[6] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
-            Weapons[7] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
-            Weapons[8] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
-            Weapons[9] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
-            Weapons[10] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
-            Weapons[11] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
-            Weapons[12] = new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10);
 
+            // Populate weapons
+            Weapons.Add(new Weapon(null, Globals.Textures["Shotgun"], "Gun", new Vector2(10, 50), Globals.Textures["Placeholder"], -5, 1, 750, "Shotgun", 1, 5));      
+            Weapons.Add(new Weapon(null, Globals.Textures["Sniper"], "Gun", new Vector2(2, 150), Globals.Textures["Placeholder"], -10, 1, 1250, "Sniper", 40, 5));            
+            Weapons.Add(new Weapon(null, Globals.Textures["AR"], "Gun", new Vector2(10, 50), Globals.Textures["Placeholder"], -5, 1, 110, "AK-47", 10, 5));
+
+            Weapons.Add(new Weapon(null, Globals.Textures["Minigun"], "Gun", new Vector2(10, 50), Globals.Textures["Placeholder"], -5, 1, 35, "Minigun", 10, 5));
+            Weapons.Add(new Weapon(null, Globals.Textures["BeeGun"], "Gun", new Vector2(15, 50), Globals.Textures["Placeholder"], -15, 1, 175, "Bee Gun", 10, 5));
+            Weapons.Add(new Weapon(null, Globals.Textures["DjGun"], "Gun", new Vector2(20, 50), Globals.Textures["Placeholder"], -5, 1, 350, "DJ Gun", 10, 5));
+
+            Weapons.Add(new Weapon(null, Globals.Textures["Pistol"], "Gun", new Vector2(6, 25), Globals.Textures["Placeholder"], -8, 1, 500, "Deagle", 15, 5));
+            Weapons.Add(new Weapon(null, Globals.Textures["LittleMini"], "Gun", new Vector2(8, 25), Globals.Textures["Placeholder"], -12, 1, 75, "Mini Minigun", 15, 5));
+            Weapons.Add(new Weapon(null, Globals.Textures["Uzi"], "Gun", new Vector2(6, 25), Globals.Textures["Placeholder"], -11, 1, 90, "Uzi", 15, 5));
+
+            Weapons.Add(new Weapon(null, Globals.Textures["Magnum"], "Gun", new Vector2(6, 25), Globals.Textures["Placeholder"], -8, 1, 150, "Magnum", 15, 5));
+            Weapons.Add(new Weapon(null, Globals.Textures["Sawblade Gun"], "Gun", new Vector2(20, 20), Globals.Textures["Placeholder"], -8, 1, 400, "Saw Gun", 10, 5));
+            Weapons.Add(new Weapon(null, Globals.Textures["MiniShotgun"], "Gun", new Vector2(8, 25), Globals.Textures["Placeholder"], -12, 1, 75, "MiniShotgun", 15, 5));
+
+            for (int i = 4; i < 24; i++)
+            {
+                Weapons.Add(new Weapon(null, Globals.Textures["Placeholder"], "Gun", new Vector2(10, 300), Globals.Textures["Placeholder"], -350, 1, 300, "Default", 10, 5));
+            }
         }
+
         public void Refresh()
         {
             Console.WriteLine("Refreshing shop...");
             Random random = new Random(Guid.NewGuid().GetHashCode());
-            int slot1 = random.Next(1, 4);
-            random = new Random(Guid.NewGuid().GetHashCode());
-            int slot2 = random.Next(4, 7);
-            random = new Random(Guid.NewGuid().GetHashCode());
-            int slot3 = random.Next(7, 10);
-            random = new Random(Guid.NewGuid().GetHashCode());
-            int slot4 = random.Next(10, 13);
+            first = random.Next(0, 3);
+            second = random.Next(3, 6);
+            third = random.Next(6, 9);
+            fourth = random.Next(9, 12);
 
-            Console.WriteLine(slot1 + " | " + slot2 + " | " + slot3 + " | " + slot4);
+            Console.WriteLine($"{first} | {second} | {third} | {fourth}");
 
-            first = slot1;
-            second = slot2;
-            third = slot3;
-            fourth = slot4;
+            selectedWeapons[0] = Weapons[first];
+            selectedWeapons[1] = Weapons[second];
+            selectedWeapons[2] = Weapons[third];
+            selectedWeapons[3] = Weapons[fourth];
 
-            Determine();
+            fPrice = selectedWeapons[0].price;
+            sPrice = selectedWeapons[1].price;
+            tPrice = selectedWeapons[2].price;
+            foPrice = selectedWeapons[3].price;
+
+            data[0] = $"{selectedWeapons[0].name}: {fPrice} Z-Coins";
+            data[1] = $"{selectedWeapons[1].name}: {sPrice} Z-Coins";
+            data[2] = $"{selectedWeapons[2].name}: {tPrice} Z-Coins";
+            data[3] = $"{selectedWeapons[3].name}: {foPrice} Z-Coins";
         }
-        public void Determine()
-        {
-            int[] selects = new int[4];
-            selects[0] = first;
-            selects[1] = second;
-            selects[2] = third;
-            selects[3] = fourth;
 
-            for (int i = 0; i < selects.Length; i++)
-            {
-                switch (selects[i])
-                {
-                    case 1:
-                        data[i] = "Sniper: 75 Z-Coins, \nPierces Zombies";
-                        fPrice = 75;
-                        break;
-                    case 2:
-                        data[i] = "AK-47: 35 Z-Coins";
-                        fPrice = 35;
-                        break;
-                    case 3:
-                        data[i] = "Deagle: 20 Z-Coins";
-                        fPrice = 20;
-                        break;
-                    default:
-                        data[i] = "Default: 10 Z-Coins";
-                        sPrice = 10;
-                        tPrice = 10;
-                        foPrice = 10;
-                        break;
-                }
-            }
-        }
         public void Update()
         {
-            
+            // To be implemented as needed
         }
+
         public void Draw()
         {
-            if (draw)
+            if (!draw) return;
+
+            Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1680, 180, 240, 420), Color.White);
+
+            for (int i = 0; i < 4; i++)
             {
-                Globals.Batch.Draw(Globals.Textures["Placeholder"], new Rectangle(1680, 180, 240, 420), Color.White);
-
-                Globals.Batch.DrawString(Globals.Font, data[0], new Vector2(1750, 320), Color.Black);
-                Globals.Batch.DrawString(Globals.Font, data[1], new Vector2(1750, 380), Color.Black);
-                Globals.Batch.DrawString(Globals.Font, data[2], new Vector2(1750, 440), Color.Black);
-                Globals.Batch.DrawString(Globals.Font, data[3], new Vector2(1750, 500), Color.Black);
-
-                Globals.Batch.Draw(Globals.Textures["AButton"], new Rectangle(1680, 310, 50, 50), Color.White);
-                Globals.Batch.Draw(Globals.Textures["XButton"], new Rectangle(1680, 370, 50, 50), Color.White);
-                Globals.Batch.Draw(Globals.Textures["YButton"], new Rectangle(1680, 430, 50, 50), Color.White);
-                Globals.Batch.Draw(Globals.Textures["BButton"], new Rectangle(1680, 490, 50, 50), Color.White);
+                Globals.Batch.DrawString(Globals.Font, data[i], new Vector2(1725, 320 + i * 60), Color.Black);
             }
+
+            Globals.Batch.Draw(Globals.Textures["AButton"], new Rectangle(1680, 310, 40, 40), Color.White);
+            Globals.Batch.Draw(Globals.Textures["XButton"], new Rectangle(1680, 370, 40, 40), Color.White);
+            Globals.Batch.Draw(Globals.Textures["YButton"], new Rectangle(1680, 430, 40, 40), Color.White);
+            Globals.Batch.Draw(Globals.Textures["BButton"], new Rectangle(1680, 490, 40, 40), Color.White);
         }
     }
+
 }

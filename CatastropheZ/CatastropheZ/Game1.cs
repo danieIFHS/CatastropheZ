@@ -78,7 +78,6 @@ namespace CatastropheZ
             // TODO: use this.Content to load your game content here
             Globals.Textures["Placeholder"] = this.Content.Load<Texture2D>("images");
             Globals.Textures["Bullet"] = this.Content.Load<Texture2D>("Bullet");
-            Globals.Textures["Sniper"] = this.Content.Load<Texture2D>("Sniper");
             Globals.Textures["DJGun"] = this.Content.Load<Texture2D>("DJGun");
             Globals.Textures["Cat1"] = this.Content.Load<Texture2D>("Cat");
             Globals.Textures["Border"] = this.Content.Load<Texture2D>("Border");
@@ -105,6 +104,13 @@ namespace CatastropheZ
             {
                 string sub = Icons[i].Substring(8, Icons[i].Length - 12);
                 Globals.Textures[sub.Substring(14)] = this.Content.Load<Texture2D>(sub);
+            }
+
+            string[] Weapons = Directory.GetFiles("Content\\Sprites\\Weapons");
+            for (int i = 0; i < Weapons.Count(); i++)
+            {
+                string sub = Weapons[i].Substring(8, Weapons[i].Length - 12);
+                Globals.Textures[sub.Substring(16)] = this.Content.Load<Texture2D>(sub);
             }
 
             foreach (KeyValuePair<string, Texture2D> entry in Globals.Textures)
@@ -168,7 +174,7 @@ namespace CatastropheZ
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back > 0 && menuState == 0)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.LeftShoulder > 0 && menuState == 0)
                 this.Exit();
 
             // TODO: Add your update logic here

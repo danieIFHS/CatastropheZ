@@ -28,8 +28,9 @@ namespace CatastropheZ
         public string name;
         public int x;
         public float rumble;
+        public int price;
 
-        public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot, int _cooldown, string _name, float _rumble)
+        public Weapon(Player _player, Texture2D _texture, string _Type, Vector2 _size, Texture2D _icon, int _offset, int _slot, int _cooldown, string _name, float _rumble, int _price)
         {
             attatchedPlayer = _player;
             texture = _texture;
@@ -43,6 +44,7 @@ namespace CatastropheZ
             rumble = _rumble;
 
             cooldown = _cooldown;
+            price = _price;
 
             Equipped = true; // Add a check here later to see if the player's active slot is this weapon, if so set equipped to true
         }
@@ -61,25 +63,24 @@ namespace CatastropheZ
                 
                 switch (name)
                 {
-                    case "Blank":
+                    case "Deagle":
                         Globals.SFX["Deagle"].Play();
                         texture = Globals.Textures["Bullet"];
-                        
                         Console.WriteLine(name);
                         break;
                     case "Default":
                         Globals.SFX["Bolt"].Play();
                         texture = Globals.Textures["Placeholder"];
-                        
                         Console.WriteLine(name);
                         break;
                     case "AK-47":
                         Globals.SFX["AK"].Play();
                         texture = Globals.Textures["Placeholder"];
-                        
                         Console.WriteLine(name);
                         break;
                     default:
+                        Globals.SFX["Bolt"].Play();
+                        texture = Globals.Textures["Placeholder"];
                         break;
                         // Music gun can play mulitple, randomly decided sounds
                         // https://www.youtube.com/watch?v=nhJgJ-tRivg
