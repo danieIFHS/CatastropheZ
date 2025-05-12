@@ -72,7 +72,7 @@ namespace CatastropheZ
                             if (origPlayer != null) { origPlayer.kills += 1; }
                             Random random = new Random(Guid.NewGuid().GetHashCode());
                             int e = random.Next(1, 1);
-                            if (e == 1) { origPlayer.ZCoins += 1; }
+                            if (e == 1) { origPlayer.ZCoins += 3; }
                             Globals.Projectiles.RemoveAt(v);
                             break;
                         }

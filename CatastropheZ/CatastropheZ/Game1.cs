@@ -224,6 +224,10 @@ namespace CatastropheZ
                 {
                     Globals.ActiveLevel.shopkeeper.Update();
                 }
+                if (P1State.Buttons.Back > 0)
+                {
+                    Globals.InGame = false;
+                }
             }
             else if (Globals.ActiveLevel.isBeaten)
             {
@@ -235,7 +239,7 @@ namespace CatastropheZ
                 {
                     proj.Update();
                 }
-
+                Globals.InGame = false;
             }
             // Full menu loop
             else if (!Globals.InGame)
