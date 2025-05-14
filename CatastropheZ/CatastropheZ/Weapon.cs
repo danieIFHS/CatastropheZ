@@ -48,7 +48,7 @@ namespace CatastropheZ
 
             Equipped = true; // Add a check here later to see if the player's active slot is this weapon, if so set equipped to true
         }
-        
+
         public void Fire()
         {
 
@@ -89,8 +89,6 @@ namespace CatastropheZ
                     attatchedPlayer.Degrees - MathHelper.PiOver2, attatchedPlayer);
                 Globals.Projectiles.Add(e);
 
-                
-                   
             }
             
         }

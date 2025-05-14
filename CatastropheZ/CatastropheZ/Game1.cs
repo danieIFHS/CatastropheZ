@@ -208,9 +208,23 @@ namespace CatastropheZ
             if (Globals.InGame && !Globals.ActiveLevel.isBeaten)
             {
                 Globals.ActiveLevel.Update();
+                int deadP = 0;
                 foreach (Player player in Globals.Players)
                 {
                     player.Update();
+                    if (player.Health <= 0) 
+                    {
+                        deadP += 1;
+                    }
+                }
+                if (deadP == Globals.Players.Count)
+                {
+                    Globals.InGame = false;
+                    foreach (Player player in Globals.Players)
+                    {
+                        player.Health = 100;
+                        player.rumbleLeft = 0;
+                    }
                 }
                 foreach (Zombie zombie in Globals.ActiveLevel.Zombies)
                 {
@@ -227,6 +241,12 @@ namespace CatastropheZ
                 if (P1State.Buttons.Back > 0)
                 {
                     Globals.InGame = false;
+                    foreach (Player player in Globals.Players)
+                    {
+                        player.Health = 100;
+                        player.rumbleLeft = 0;
+                        player.Update();
+                    }
                 }
             }
             else if (Globals.ActiveLevel.isBeaten)
@@ -234,12 +254,16 @@ namespace CatastropheZ
                 foreach (Player player in Globals.Players)
                 {
                     player.rumbleLeft = 0;
+                    player.Health = 100;
+                    player.Update();
                 }
                 foreach (Projectile proj in Globals.Projectiles.ToList())
                 {
                     proj.Update();
                 }
+                Globals.Projectiles.Clear();
                 Globals.InGame = false;
+                Globals.ActiveLevel.isBeaten = false;
             }
             // Full menu loop
             else if (!Globals.InGame)

@@ -241,6 +241,11 @@ namespace CatastropheZ
                 if (isBeaten)
                 {
                     Console.WriteLine("You won yippe");
+                    foreach (Player player in Globals.Players)
+                    {
+                        player.rumbleLeft = 0;
+                        player.Update();
+                    }
                 }
             }
         }
