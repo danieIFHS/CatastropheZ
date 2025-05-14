@@ -86,6 +86,10 @@ namespace CatastropheZ
                         Globals.SFX["SawGun"].Play();
                         Console.WriteLine(name);
                         break;
+                    case "DJ Gun":
+                        Globals.SFX["DJGun"].Play();
+                        Console.WriteLine(name);
+                        break;
                     default:
                         Globals.SFX["Bolt"].Play();
                         texture = Globals.Textures["Placeholder"];
