@@ -78,6 +78,14 @@ namespace CatastropheZ
                         texture = Globals.Textures["Placeholder"];
                         Console.WriteLine(name);
                         break;
+                    case "Bee Gun":
+                        Globals.SFX["BeeGun"].Play();
+                        Console.WriteLine(name);
+                        break;
+                    case "Saw Gun":
+                        Globals.SFX["SawGun"].Play();
+                        Console.WriteLine(name);
+                        break;
                     default:
                         Globals.SFX["Bolt"].Play();
                         texture = Globals.Textures["Placeholder"];

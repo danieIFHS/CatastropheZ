@@ -214,7 +214,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SFX\DJGun_1.wav">
+    <Compile Include="DJGun_1.wav">
       <Name>DJGun_1</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
@@ -305,6 +305,18 @@
       <Name>MiniShotgun</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BeeGun.wav">
+      <Name>BeeGun</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="SawGun.wav">
+      <Name>SawGun</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
